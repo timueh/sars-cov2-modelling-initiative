@@ -1,16 +1,8 @@
 #SIR_model.py for Germany
 
 import numpy as np
-import scipy.optimize as opt
-
 import matplotlib.pyplot as plt
-from pylab import *
-import matplotlib.colors as mcolors
-from scipy.optimize import curve_fit
-import math
-from scipy.stats import norm
-import matplotlib.mlab as mlab
-import scipy.special as sp
+
 
 # data:
 data_file="./Corona_infections_Germany.txt"

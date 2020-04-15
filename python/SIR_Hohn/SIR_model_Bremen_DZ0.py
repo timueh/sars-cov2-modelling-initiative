@@ -1,16 +1,16 @@
 #SIR_model.py for Germany
 
 import numpy as np
-import scipy.optimize as opt
+#import scipy.optimize as opt
 
 import matplotlib.pyplot as plt
-from pylab import *
-import matplotlib.colors as mcolors
-from scipy.optimize import curve_fit
-import math
-from scipy.stats import norm
-import matplotlib.mlab as mlab
-import scipy.special as sp
+#from pylab import *
+#import matplotlib.colors as mcolors
+#from scipy.optimize import curve_fit
+#import math
+#from scipy.stats import norm
+#import matplotlib.mlab as mlab
+#import scipy.special as sp
 
 # data:
 data_file="./Corona_infections_Bremen.txt"
@@ -56,7 +56,7 @@ rho= 0.03 # recovery rate for infected individuals
 sigma= 0.0 # rate of recovered individuals that become susceptible for reinfection
 
 # initialization
-tmax=365 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
+tmax=35 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
 dt=1.0
 
 S=np.zeros(tmax)
@@ -121,17 +121,20 @@ plt.legend(loc=5)
 
 
 plt.figure(2)
-#plt.plot(time,I,'g',label='active Infections') # 2% der Infizierten entwickeln eine Pneumonie, Quelle RKI
-plt.plot(time,I*0.22,'b',label='Hospitalized') # 2% der Infizierten entwickeln eine Pneumonie, Quelle RKI
-plt.plot(time,I*0.12,'r',label='Pneumonia') # 2% der Infizierten entwickeln eine Pneumonie, Quelle RKI
+#plt.plot(time,I,'g',label='active Infections') # 
+#plt.plot(time,I*0.16,'b',label='Hospitalized') # 16% der Infizierten entwickeln eine Pneumonie, Quelle RKI
+#plt.plot(time,I*0.02,'r',label='Pneumonia') # 2% der Infizierten entwickeln eine Pneumonie, Quelle RKI
+
+plt.plot(time,I*0.22,'b',label='Hospitalized') # 22% der Infizierten in Bremen sind derzeit hospitalisiert
+plt.plot(time,I*0.12,'r',label='Pneumonia') # 12% der Infizierten in Bremen werden derzeit beatmet
 #plt.plot(timeax_beds,Betten_normal[:,0],'go',label='normal beds available')
-plt.plot(timeax_beds,Betten_normal[:,1],'ro',label='normal beds needed')
+plt.plot(timeax_beds,Betten_normal[:,1],'bo',label='normal beds used')
 #plt.plot(timeax_beds,Betten_beatmet[:,0],'gx',label='ventilated beds available')
-plt.plot(timeax_beds,Betten_beatmet[:,1],'rx',label='ventilated beds needed')
+plt.plot(timeax_beds,Betten_beatmet[:,1],'ro',label='ventilated beds used')
 plt.xlabel('days after 11th of March')
 plt.ylabel('number of people')
 plt.title('Hospitalized cases')
-plt.legend(loc=1)
+plt.legend(loc=2)
 
 
 
@@ -139,7 +142,7 @@ plt.figure(3)
 plt.plot(DDt,'b',label='doubling time')
 plt.xlabel('days after 11th of March')
 plt.ylabel('days')
-plt.legend(loc=1)
+plt.legend(loc=2)
 
 
 print 'Verdoppelungszeit=',DDt[7]
