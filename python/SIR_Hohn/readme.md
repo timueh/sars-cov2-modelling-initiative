@@ -34,7 +34,7 @@ they are implemented and can easily be switched on.
 
 The infection of people depends on the contact rate of susceptible 
 people with infected people (c) and on the probability (a) that the disease is 
-transmitted upon contact. In the equation, it is the product of a*c*S*I that 
+transmitted upon contact. In the equation, it is the product of a * c * S * I that 
 describes the increase of infected cases but I like to keep the parameters 
 separated to better assess where mitigation scenarios can be effective in the 
 model.
