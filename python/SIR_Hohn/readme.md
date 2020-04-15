@@ -44,11 +44,11 @@ and the recovery rate (rho) is constrained using data from the province Hubei in
 China and with data collected in Bremen. 
 
 <p align="center">
-  <img src="Hubei.png" width="500">
+  <img src="./figures/Hubei.png" width="500">
 </p>
 
 <p align="center">
-  <img src="Corona_Bremen_DZ0_14042020.png" width="500">
+  <img src="./figures/Corona_Bremen_DZ0_14042020.png" width="500">
 </p>
 
 
@@ -61,7 +61,7 @@ group by the collected data because, at least in Germany, the causal relationshi
 between the viral infection and the dead of an individual is critically assessed.
 
 <p align="center">
-  <img src="Corona_Germany_14042020.png" width="500">
+  <img src="./figures/Corona_Germany_14042020.png" width="500">
 </p>
 
 On the contrary, the number of infected people may actually be much higher than 
@@ -90,7 +90,7 @@ recently corrected to 16%) and that 2% of infected people develop pneumonia and
 therefore require ventilation. 
 
 <p align="center">
-  <img src="Hospitalized_old.png" width="500">
+  <img src="./figures/Hospitalized_old.png" width="500">
 </p>
 
 However, in retrospect, the data provided by the 
@@ -100,7 +100,7 @@ requirements in Bremen or these numbers may be used to determine undetected
 infections if the RKI data are truly reliable.
 
 <p align="center">
-  <img src="Hospitalized_new.png" width="500">
+  <img src="./figures/Hospitalized_new.png" width="500">
 </p>
 
 
