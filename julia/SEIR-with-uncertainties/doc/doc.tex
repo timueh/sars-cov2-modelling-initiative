@@ -1,0 +1,193 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{libertine}
+\usepackage{mathtools}
+\usepackage[thinc]{esdiff}
+\usepackage[a4paper, total={15cm, 19cm}]{geometry}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage[acronym]{glossaries}
+\usepackage[citestyle=numeric]{biblatex}
+\usepackage{pgf}
+\usepackage{hyperref}
+
+
+\addbibresource{lit.bib}
+
+\newcommand{\scale}{0.61}
+\newcommand{\rv}[1]{\mathsf{#1}}
+% variables
+\newcommand{\susceptible}{S}
+\newcommand{\exposed}{E}
+\newcommand{\infected}{I}
+\newcommand{\recovered}{R}
+\newcommand{\lag}{L}
+\newcommand{\intensive}{IN}
+
+% SEIR parameters
+\newcommand{\reproduction}{R_0}
+\newcommand{\populuation}{N}
+\newcommand{\tlatent}{t_{\text{lat}}}
+\newcommand{\tinfect}{t_{\text{inf}}}
+
+% ICU parameters
+\newcommand{\tlay}{t_{\text{lay}}}
+\newcommand{\tlag}{t_{\text{lag}}}
+\newcommand{\ICUpercentage}{p}
+
+\newacronym{seir}{\textsc{seir}}{susceptible, exposed, infected, recovered}
+\newacronym{icu}{\textsc{icu}}{intensive care unit}
+
+\newacronym{pce}{\textsc{pce}}{polynomial chaos expansion}
+
+\newcommand{\seir}{\textsc{seir}\xspace}
+
+
+%opening
+\title{SEIR Model with Stochastic Uncertainties --\newline A Polynomial Chaos Approach}
+\author{Tillmann Mühlpfordt}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We show how a (variant of the classic) SEIR model can be overloaded with uncertainties.
+\end{abstract}
+
+\section{Deterministic equations}
+
+The so-called \gls{seir} model is often used to model pandemics.
+Assuming no births or deaths, the dynamics can be modelled in the form of a system of ordinary differential equations \cite{DGEpi2020_03_23, RKI2020_03_20}
+
+\begin{subequations}
+\label{eq:SEIR_dynamics}
+\begin{align}
+    \diff{\susceptible}{t} &= - \frac{\reproduction}{\tinfect \populuation} \, \susceptible \infected, && \susceptible(0) = \susceptible_0 \geq 0, \\
+    \diff{\exposed}{t} &= \frac{\reproduction}{\tinfect \populuation} \susceptible \infected - \frac{\exposed}{\tlatent}, && \exposed(0) = \exposed_0 \geq 0, \\
+    \diff{\infected}{t} &= \frac{\exposed}{\tlatent} - \frac{\infected}{\tinfect}, && \infected(0) = \infected_0 \geq 0, \\
+    \diff{\recovered}{t} &= \frac{\infected}{\tinfect}, && \recovered(0) = \recovered_0 \geq 0. 
+\end{align}
+\end{subequations}
+The meaning of the parameters of the \gls{seir} model is explained in \autoref{tab:SEIR_parameters}.
+
+\begin{table}[h!]
+    \centering
+    \caption{Parameters for \gls{seir} model~\eqref{eq:SEIR_dynamics}.\label{tab:SEIR_parameters}}
+    \begin{tabular}{ll}
+        \toprule
+        Name & Meaning \\
+        \midrule
+        $\populuation$ & Total population \\
+        $\reproduction$ & Basic reproduction number \\
+        $\tinfect$ & Infectious period \\
+        $\tlatent$ & Latent period \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+In addition to the \gls{seir} model, we would like to model the number of people in need of intensive care ($\intensive(t)$), for which we introduce another two equations (which we call \gls{icu} system)
+
+\begin{subequations}
+    \label{eq:ICU_dynamics}
+    \begin{align}
+        \diff{\lag}{t} &= \frac{\ICUpercentage}{\tlatent} \, \exposed - \frac{\lag}{\tlag}, && \lag(0) = \lag_0 \geq 0, \\
+        \diff{\intensive}{t} &= \frac{\lag}{\tlag} - \frac{\intensive}{\tlay}, && \intensive(0) = \intensive_0 \geq 0.
+    \end{align}
+\end{subequations}
+
+Reading the system~\eqref{eq:ICU_dynamics} bottom-up, we see that the number of people in intensive care decreases according to the average lay time~$\tlay$, and increases according to the average lag time~$\tlag$.
+The fictitious compartment~$\lag(t)$ models the people who are transitioning from the infected compartment~($\infected(t)$) to the intensive-care compartment~($\intensive(t)$).
+
+The meaning of the parameters of the \gls{icu} model is given in \autoref{tab:ICU_parameters}.
+
+\begin{table}[h!]
+    \centering
+    \caption{Parameters for \gls{icu} model~\eqref{eq:ICU_dynamics}.\label{tab:ICU_parameters}}
+    \begin{tabular}{ll}
+        \toprule
+        Name & Meaning \\
+        \midrule
+        $\ICUpercentage$ & Fraction of infected people needing intensive care \\
+        $\tlag$ & Lag period from infection to intensive care \\
+        $\tlay$ & Period of hospitalization \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Introducing uncertainty}
+
+A key issue with both the \gls{seir} model and the \gls{icu} model is parametric uncertainty: the precise numerical values of the parameters from either \autoref{tab:SEIR_parameters} or \autoref{tab:ICU_parameters} are not known.
+To account for this uncertainty explicitly, we can model the parameters as random variables.
+For instance,
+\begin{align}
+    \rv{\reproduction} \sim \mathcal{N}(\mu_{\reproduction}, \sigma_{\reproduction})
+\end{align}
+means to model the basic reproduction rate as a Gaussian random variable with mean~$\mu_{\reproduction}$ and standard deviation~$\sigma_{\reproduction}$.
+
+What is the effect of this uncertainty on the solution of the \gls{seir}-\gls{icu} model?
+One way to study this effect is to do Monte Carlo simulation:
+\begin{enumerate}
+    \item draw samples of the random variable,
+    \item solve the respective system of differential equations~\eqref{eq:SEIR_dynamics} \& \eqref{eq:ICU_dynamics},
+    \item and repeat.
+\end{enumerate}
+
+Another way is to use \gls{pce}, a method that is to a random variable what a Fourier series is to a periodic signal: an orthogonal decomposition.
+This method allows to propagate uncertainties through differential equations in a single shot.
+By that we mean the following
+\begin{enumerate}
+    \item introduce \gls{pce} for all uncertaint quantities,
+    \item derive a new set of equations via so-called Galerkin projection, and
+    \item solve this new system \emph{once}.
+\end{enumerate}
+
+The advantage of \gls{pce} over Monte-Carlo is that no sampling is required whatsoever; by solving the new set of equations, all statistical information are available such as expected value and/or standard deviations over time.
+ 
+\section{Simulation study}
+
+The following study is based on the \gls{seir}-\seir{icu} model from~\cite{DGEpi2020_03_23}.
+We introduce uncertainty for the basic reproduction number as a Gaussian random variable,
+\begin{subequations}
+\begin{align}
+    \rv{\reproduction} &\sim \mathcal{N}(\mu_{\reproduction}, \sigma_{\reproduction}).
+\end{align}
+In addition, we introduce uncertainty for the percentage of people in need of intensive care as a uniform random variable with support $[\underline{\ICUpercentage}, \overline{\ICUpercentage}]$
+\begin{align}
+    \rv{\reproduction} &\sim \mathcal{N}(\mu_{\reproduction}, \sigma_{\reproduction}), \\
+    \rv{\ICUpercentage} &\sim \mathcal{U}(\underline{\ICUpercentage}, \overline{\ICUpercentage}).
+\end{align}
+\end{subequations}
+The results are shown in \autoref{fig:SimulationStudy}.
+The mean values replicate the known behavior from~\cite{DGEpi2020_03_23}.
+Accounting specifically for the uncertainties allows to draw intervals that visualize the standard deviation.
+Not surprisingly, the peak values of the uncertainty are reached at the peak of the epidemic, with quite severe deviations.
+
+
+\begin{figure}
+    \centering
+    \input{figs/seir-icu-3.pgf}
+    \input{figs/seir-icu-6.pgf}
+    \begin{tabular}{lllll}
+        \toprule
+        $\mu_{\reproduction}$ & $\sigma_{\reproduction}$ & $\underline{\ICUpercentage}$ & $\overline{\ICUpercentage}$ & Color\\
+        \midrule
+        2.5 & 0.10 & 0.02 & 0.06 & blue \\
+        2.0 & 0.15 & 0.02 & 0.06 & orange\\
+        1.5 & 0.10 & 0.02 & 0.06 & green \\
+        \bottomrule
+    \end{tabular}
+    \caption{Number of infected people~$\infected(t)$ and \gls{icu} patients~$\intensive(t)$ for different parameter values.
+     The shaded area denotes the interval of $\pm$ one standard deviation; solid lines are mean values.
+     Time axis represents days.}
+    \label{fig:SimulationStudy}
+\end{figure}
+
+
+\printbibliography
+
+\end{document}
