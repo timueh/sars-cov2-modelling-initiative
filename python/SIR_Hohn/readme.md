@@ -61,7 +61,7 @@ group by the collected data because, at least in Germany, the causal relationshi
 between the viral infection and the dead of an individual is critically assessed.
 
 <p align="center">
-  <img src="./figures/Corona_Germany_DZ0.png" width="500">
+  <img src="./figures/Corona_Deutschland_DZ0.png" width="500">
 </p>
 
 On the contrary, the number of infected people may actually be much higher than 
