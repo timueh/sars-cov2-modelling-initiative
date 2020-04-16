@@ -20,11 +20,22 @@ If you are new to Git, [see below](#why-git/github).
 
 Suppose you would like to add your code to the repository.
 How do you do it?
-- Create a new branch off the master branch to which you commit and push your changes.
-- Doing so, check whether there exists a directory for your programming language (Python, R, Julia, Matlab, ...).
-    - If so, create a directory for your code in it.
-    - If not, create a directory for your programming language.
-- Create a merge request.
+There are basically two ways how you can contribute.
+
+## Case 1: You already have your code in a GitHub repository
+
+- Open an issue informing that you would like your code to be added.
+- Your code will then be pulled via `git subtree`([see this post for a comparison of `git subtree` and `git submodule`](https://codewinsarguments.co/2016/05/01/git-submodules-vs-git-subtrees/)).
+- Whenever you make changes to your original repo, you open another issue to pull in your existing code; no pull requests are needed.
+
+## Case 2: You don't have the code in a repository
+
+- Fork from this repository, see [this excellent guide](https://guides.github.com/activities/forking/).
+- Add your code to the repository:
+    - Check whether there exists a directory for your programming language (Python, R, Julia, Matlab, ...).
+        - If not, create a directory for your programming language
+        - Then, create a directory for your code in the programming lanauge directory.
+- Make a pull request.
 
 ## Why Git/GitHub?
 
