@@ -2,7 +2,7 @@ timueh_seir = Dict("git-subtree-dir"=> "julia/SEIR-with-uncertainties", "git-sub
 
 qed_hamburg = Dict("git-subtree-dir"=> "matlab/QEDhamburg", "git-subtree-split"=> "f539f28df31dfa2f810de7a50a331b38b60d0ebf", "url"=> "https://github.com/QEDHamburg/covid19")
 
-mitepid_sim = Dict("git-subtree-dir"=> "python/MiTepid_sim", "git-subtree-split"=> "c5e90bb33b0d90f1ad1ef358fec19147bee05b7a", "url"=> "https://github.com/vahid-sb/MiTepid_sim.git")
+# mitepid_sim = Dict("git-subtree-dir"=> "python/MiTepid_sim", "git-subtree-split"=> "c5e90bb33b0d90f1ad1ef358fec19147bee05b7a", "url"=> "https://github.com/vahid-sb/MiTepid_sim.git")
 
 repos = [timueh_seir, qed_hamburg, mitepid_sim]
 
