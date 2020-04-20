@@ -25,4 +25,6 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Call the julia script
-      run: julia -e 'include("pull-all-subtrees.jl")'
+      run: |
+        pwd
+        julia -e 'include("pull-all-subtrees.jl")'
