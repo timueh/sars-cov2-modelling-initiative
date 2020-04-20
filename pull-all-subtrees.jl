@@ -8,7 +8,7 @@ repos = [timueh_seir, qed_hamburg, mitepid_sim]
 
 for repo in repos
     dir, url = repo["git-subtree-dir"], repo["url"]
-    cmd = `git subtree pull -P "$dir" --squash $url master`
+    cmd = `git subtree pull -P "$dir" $url master`
 
     printstyled("Pulling $dir\n", color=:green)
     result = run(cmd)
