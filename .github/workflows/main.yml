@@ -28,4 +28,4 @@ jobs:
       run: |
         pwd
         ls
-        julia -e 'include("pull-subtrees.jl")'
+        julia -e 'include("auxfiles/pull-subtrees.jl")'
