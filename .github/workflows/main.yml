@@ -27,4 +27,5 @@ jobs:
     - name: Call the julia script
       run: |
         pwd
+        ls
         julia -e 'include("pull-all-subtrees.jl")'
