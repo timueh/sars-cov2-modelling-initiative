@@ -9,7 +9,6 @@ repos = [timueh_seir, qed_hamburg, mitepid_sim]
 for repo in repos
     dir, url = repo["git-subtree-dir"], repo["url"]
     cmd = `git subtree pull --prefix=$dir $url master --squash`
-
     printstyled("Pulling $dir\n", color=:green)
     result = run(cmd)
     @assert(result.exitcode == 0, "Something went wrong pulling repo $dir from $url")
