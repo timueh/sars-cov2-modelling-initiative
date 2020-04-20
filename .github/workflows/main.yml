@@ -14,7 +14,4 @@ jobs:
         version: 1.3
 
     - name: Call the julia script
-      run: |
-        pwd
-        ls
-        julia -e 'include("auxfiles/pull-subtrees.jl")'
+      run: julia -e 'include("auxfiles/pull-subtrees.jl")'
