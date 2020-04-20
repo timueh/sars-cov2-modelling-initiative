@@ -1,3 +1,5 @@
+![Pull-subtrees](https://github.com/timueh/sars-cov2-modelling-initiative/workflows/Pull-subtrees/badge.svg)
+
 # Code repository for the SARS-CoV2 modelling initiative
 
 The SARS-CoV2 Modelling Initiative is a loose conglomerate of scientists concerned about the outbreak of Covid 19.
