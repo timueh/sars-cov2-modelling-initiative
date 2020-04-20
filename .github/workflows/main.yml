@@ -16,6 +16,9 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+          ref: master
+          fetch-depth: 0
     - uses: julia-actions/setup-julia@v1
       with:
         version: 1.3
