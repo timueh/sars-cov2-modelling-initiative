@@ -105,16 +105,20 @@ infections if the RKI data are truly reliable.
 
 
 # Requirements
-The model is programmed in Python and requires the packages numpy and 
-matplotlib.pyplot.
+The model is programmed in Python and requires the packages `numpy` and 
+`matplotlib.pyplot`.
 
 Run the model either from the Terminal typing: 
 
+```python
 python SIR_model_Bremen_DZ0.py
+```
 
 or
 
+```python
 python SIR_model_Germany.py
+```
 
 # Compatibilities
 The model should run fine on any Python version, except for the plotting, where 
