@@ -56,7 +56,7 @@ rho= 0.03 # recovery rate for infected individuals
 sigma= 0.0 # rate of recovered individuals that become susceptible for reinfection
 
 # initialization
-tmax=35 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
+tmax=45 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
 dt=1.0
 
 S=np.zeros(tmax)
@@ -76,11 +76,11 @@ for i in range(tmax-1):
     if i>15:
         c=2.0/P
         if i>20:
-            rho=0.06
+            rho=0.05
             if i>24:
                 delta= 0.005 # this increase in mortality is due to an incident of clustered infections in a special-care home for elderly people
-                if i>29:
-                    c=1.1/P
+                #if i>29:
+                    #c=1.1/P # this was only an artefact from Easter?
                     #rho=0.03
                     #if i>50: #for future scenarios
                         #c=2.2/P
@@ -117,7 +117,7 @@ plt.plot(Brec,'go',label='recovered')
 plt.xlabel('days after 11th of March')
 plt.ylabel('number of people')
 plt.title('Covid Model for Bremen plus surrounding (assuming 0\% unreported cases)')
-plt.legend(loc=5)
+plt.legend(loc=2)
 
 
 plt.figure(2)
