@@ -121,3 +121,13 @@ The model should run fine on any Python version, except for the plotting, where
 Python versions older than 2.8.4 seem to have problems with the legend. To avoid 
 this, simply remove the labels from the plot command and do not call the legend.
 
+
+# Update 22.04.2020
+The decline in active infections was only an artefact of the Easter holidays and 
+the lack of data reporting. New numbers suggest that also in Bremen the case 
+numbers still rise.
+
+<p align="center">
+  <img src="./figures/Corona_Bremen_DZ0_update_22042020.png" width="500">
+</p>
+
