@@ -1,0 +1,20 @@
+{
+    "SEIR-with-uncertainties": 
+        {
+            "language": "julia",
+            "url": "https://github.com/timueh/PandemicModeling",
+            "contact": "tillmann.muehlpfordt@kit.edu"
+        },
+    "QEDhamburg":
+        {
+            "language": "matlab",
+            "url": "https://github.com/QEDHamburg/covid19",
+            "contact": "rene.glawion@uni-hamburg.de"
+        },
+    "MiTepid_sim":
+        {
+            "language": "python",
+            "url": "https://github.com/vahid-sb/MiTepid_sim.git",
+            "contact": "vahid.bokharaie@tuebingen.mpg.de"
+        }
+}
