@@ -86,7 +86,7 @@ function run_all(repos)
     end
 end
 
-repos = JSON.parsefile("auxfiles/subtree-packages.json")
+
 
 
 
