@@ -16,4 +16,4 @@ jobs:
     - name: Call the julia script
       run: |
 
-        julia -e 'include("pull-subtrees.jl")'
+        julia -e 'using Pkg; Pkg.add("JSON"); include("pull-subtrees.jl")'
