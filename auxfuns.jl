@@ -5,6 +5,7 @@ json_keys = Dict("lang" => "language",
                  "contact" => "contact",
                  "name" => "name")
 
+
 function pull_subtrees(repos::Dict)
     for (name, data) in repos
         dir, url = data["language"] * "/" * name, data["url"]
@@ -26,7 +27,6 @@ function unpack(d::Dict)
 end
 
 function create_language_dictionary(repos::Dict)
-    # get repos according to language
     langs = [ data[json_keys["lang"]] for data in values(repos)]
     d = Dict{String, Vector{Dict}}()
     for data in values(repos)
@@ -75,9 +75,7 @@ function run_all(repos)
     if pull_subtrees(repos)
         langs = create_language_dictionary(repos)
         fill_language_dictionary!(langs, repos)
-    
         file = "list-of-packages.md"
-    
         create_md_file(file)
     
         for (lang, data) in langs
