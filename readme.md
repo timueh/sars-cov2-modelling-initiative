@@ -6,42 +6,38 @@ The SARS-CoV2 Modelling Initiative is a loose conglomerate of scientists concern
 The main focus of the initiative is the situation in Germany.
 The scientific background of the initiative varies from epidemiologists, physicians, economists to mathematicians and physicists.
 
-__This repository serves as a hub to collect code related to the initiative.__
 [__Click here to see the list of all packages.__](list-of-packages.md)
 
-
-
-If you would like to become a member of the repository, please contact tillmann.muehlpfordt@kit.edu.
+__This repository serves as a hub collecting code related to the initiative.
+This repository is *no* repository for code development, but a repository for code collection.
+All repositories are added via `git subtree`, and changes in the original repository are pulled in automatically.__
 
 If you are new to Git, [see below](#why-git/github).
 
-## Goals and objectives
+## What to achieve?
 
-- provide single point of reference
-- make your work transparent and accountable
-- allow for reproducibility
-- reduce communication overhead
+The objectives of this hub repository are
 
-## Recommended workflow
+- to provide a single point of reference,
+- to make your work transparent and accountable,
+- to allow for reproducibility, and
+- to reduce communication overhead.
+
+## How to contribute?
 
 Suppose you would like to add your code to the repository.
 How do you do it?
-There are basically two ways how you can contribute.
+Basically, as soon as you have your code in a GitHub repository, you [open an issue](https://github.com/timueh/sars-cov2-modelling-initiative/issues/new), and ask to be added. That's it.
+Or in some greater detail:
 
-## Case 1: You already have your code in a GitHub repository
+1. Put your code in a GitHub repository. __This means to put your code in a *dedicated* repository different from *this* repository.__
+2. [Open an issue](https://github.com/timueh/sars-cov2-modelling-initiative/issues/new), providing the following information:
+    - programming language,
+    - link to your repository, and
+    - a contact e-mail address.
+3. Your code will be added to the repository via `git subtree`([see this post if you're interested in the technical details](https://codewinsarguments.co/2016/05/01/git-submodules-vs-git-subtrees/).)
 
-- Open an issue informing that you would like your code to be added.
-- Your code will then be pulled via `git subtree`([see this post for a comparison of `git subtree` and `git submodule`](https://codewinsarguments.co/2016/05/01/git-submodules-vs-git-subtrees/)).
-- Whenever you make changes to your original repo, you open another issue to pull in your existing code; no pull requests are needed.
-
-## Case 2: You don't have the code in a repository
-
-- Fork from this repository, see [this excellent guide](https://guides.github.com/activities/forking/).
-- Add your code to the repository:
-    - Check whether there exists a directory for your programming language (Python, R, Julia, Matlab, ...).
-        - If not, create a directory for your programming language
-        - Then, create a directory for your code in the programming lanauge directory.
-- Make a pull request.
+__Note:__ You have and will continue to have full control over your original code. Whenever you make changes to your original repository, these changes will be pulled automatically.
 
 ## Why Git/GitHub?
 
