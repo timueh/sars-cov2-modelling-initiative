@@ -16,5 +16,17 @@
             "language": "python",
             "url": "https://github.com/vahid-sb/MiTepid_sim.git",
             "contact": "vahid.bokharaie@tuebingen.mpg.de"
-        }
+        },
+    "fake":
+        {
+            "language": "julia",
+            "url": "https://fake.com",
+            "contact": "fake@me.com"
+        },
+    "fakeasd":
+    {
+        "language": "python",
+        "url": "https://fake.com",
+        "contact": "fake@me.com"
+    }
 }

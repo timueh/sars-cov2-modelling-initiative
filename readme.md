@@ -5,9 +5,13 @@
 The SARS-CoV2 Modelling Initiative is a loose conglomerate of scientists concerned about the outbreak of Covid 19.
 The main focus of the initiative is the situation in Germany.
 The scientific background of the initiative varies from epidemiologists, physicians, economists to mathematicians and physicists.
-This repository serves as a hub to collect code related to the initiative.
 
-__If you would like to become a member of the repository, please contact @timueh.__
+__This repository serves as a hub to collect code related to the initiative.__
+[__Click here to see the list of all packages.__](list-of-packages.md)
+
+
+
+If you would like to become a member of the repository, please contact tillmann.muehlpfordt@kit.edu.
 
 If you are new to Git, [see below](#why-git/github).
 
