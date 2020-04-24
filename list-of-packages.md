@@ -1,6 +1,6 @@
 # Included packages
 
-The following packages---ordered by language---are included in the repository (last updated 2020-04-23).
+The following packages---ordered by language---are included in the repository (last updated 2020-04-24).
 
 ## Julia
 | Package | Contact |
@@ -15,5 +15,6 @@ The following packages---ordered by language---are included in the repository (l
 ## Python
 | Package | Contact |
 | --- | --- |
+| [Covid19-germany-luethen](https://github.com/ulilueth/covid19-germany) | https://github.com/ulilueth |
 | [MiTepid_sim](https://github.com/vahid-sb/MiTepid_sim.git) | vahid.bokharaie@tuebingen.mpg.de |
 
