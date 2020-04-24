@@ -1,6 +1,11 @@
 name: Pull-subtrees
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    30 10 * * 0-6
+
 
 jobs:
   pull-subtrees:
