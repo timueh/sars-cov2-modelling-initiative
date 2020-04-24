@@ -16,5 +16,11 @@
             "language": "python",
             "url": "https://github.com/vahid-sb/MiTepid_sim.git",
             "contact": "vahid.bokharaie@tuebingen.mpg.de"
+        },
+    "Covid19-germany-luethen":
+        {
+            "language": "python",
+            "url": "https://github.com/ulilueth/covid19-germany",
+            "contact": "https://github.com/ulilueth"
         }
 }
