@@ -1,4 +1,4 @@
-# using JSON, Dates
+using JSON, Dates
 
 json_keys = Dict("lang" => "language",
                  "url" => "url",
@@ -71,18 +71,24 @@ function append_md_file(name::String, lang::String, data)
     end
 end
 
-function run_all(repos)
-    if pull_subtrees(repos)
-        langs = create_language_dictionary(repos)
-        fill_language_dictionary!(langs, repos)
-        file = "list-of-packages.md"
-        create_md_file(file)
-    
-        for (lang, data) in langs
-            append_md_file(file, lang, data)
-        end
+function build_md_file(repos)
+    langs = create_language_dictionary(repos)
+    fill_language_dictionary!(langs, repos)
+    file = "list-of-packages.md"
+    create_md_file(file)
+
+    for (lang, data) in langs
+        append_md_file(file, lang, data)
     end
 end
+
+function run_all(repos)
+    if pull_subtrees(repos)
+        build_md_file(repos)
+    end
+end
+
+repos = JSON.parsefile("subtree-packages.json")
 
 
 

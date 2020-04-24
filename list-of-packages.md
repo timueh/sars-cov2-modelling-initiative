@@ -15,6 +15,6 @@ The following packages---ordered by language---are included in the repository (l
 ## Python
 | Package | Contact |
 | --- | --- |
-| [Covid19-germany-luethen](https://github.com/ulilueth/covid19-germany) | https://github.com/ulilueth |
+| [Covid19-germany-luethen](https://github.com/ulilueth/covid19-germany) | caes@gmx.de |
 | [MiTepid_sim](https://github.com/vahid-sb/MiTepid_sim.git) | vahid.bokharaie@tuebingen.mpg.de |
 
