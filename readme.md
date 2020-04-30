@@ -14,6 +14,11 @@ All repositories are added via `git subtree`, and changes in the original reposi
 
 If you are new to Git, [see below](#why-git/github).
 
+## Spreadsheet for parameters for modelling the spread of Covid-19
+
+You would like to model the spread of Covid-19 mathematically?
+Then make sure to check out [this spreadsheet](https://drive.google.com/file/d/1jdFg7pRQKC2f1mIOXsANnO6EDdHtSkwy/view) with valuable information on parameter values.
+
 ## What to achieve?
 
 The objectives of this hub repository are
