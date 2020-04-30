@@ -1,26 +1,27 @@
 {
-    "SEIR-with-uncertainties": 
-        {
-            "language": "julia",
-            "url": "https://github.com/timueh/PandemicModeling",
-            "contact": "tillmann.muehlpfordt@kit.edu"
-        },
-    "QEDhamburg":
-        {
-            "language": "matlab",
-            "url": "https://github.com/QEDHamburg/covid19",
-            "contact": "rene.glawion@uni-hamburg.de"
-        },
-    "MiTepid_sim":
-        {
-            "language": "python",
-            "url": "https://github.com/vahid-sb/MiTepid_sim.git",
-            "contact": "vahid.bokharaie@tuebingen.mpg.de"
-        },
-    "Covid19-germany-luethen":
-        {
-            "language": "python",
-            "url": "https://github.com/ulilueth/covid19-germany",
-            "contact": "caes@gmx.de"
-        }
+    "Covid19-germany-luethen": {
+        "language": "python",
+        "url": "https://github.com/ulilueth/covid19-germany",
+        "contact": "caes@gmx.de"
+    },
+    "Corona-Hohn": {
+        "language": "python",
+        "url": "https://github.com/soenkehohn/Corona",
+        "contact": "soenke.hohn@leibniz-zmt.de, soenke.hohn@googlemail.com"
+    },
+    "QEDhamburg": {
+        "language": "matlab",
+        "url": "https://github.com/QEDHamburg/covid19",
+        "contact": "rene.glawion@uni-hamburg.de"
+    },
+    "SEIR-with-uncertainties": {
+        "language": "julia",
+        "url": "https://github.com/timueh/PandemicModeling",
+        "contact": "tillmann.muehlpfordt@kit.edu"
+    },
+    "MiTepid_sim": {
+        "language": "python",
+        "url": "https://github.com/vahid-sb/MiTepid_sim.git",
+        "contact": "vahid.bokharaie@tuebingen.mpg.de"
+    }
 }
