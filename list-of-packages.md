@@ -16,6 +16,7 @@ The following packages---ordered by language---are included in the repository (l
 | Package | Contact |
 | --- | --- |
 | [coviz-ponge](https://github.com/JohannesPonge/coviz) | johannes.ponge@uni-muenster.de |
+| [covid-19-tu-ilmenau](https://github.com/Stochastik-TU-Ilmenau/COVID-19) | thomas.hotz@tu-ilmenau.de |
 
 ## Python
 | Package | Contact |
