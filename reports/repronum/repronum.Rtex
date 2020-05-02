@@ -1,0 +1,867 @@
+\documentclass[a4paper,fleqn,10pt]{article}
+\usepackage{a4wide}
+\setlength{\headheight}{0mm}
+\setlength{\headsep}{0mm}
+\addtolength{\topmargin}{-5mm}
+\addtolength{\textheight}{30mm}
+\pdfcompresslevel9
+% \usepackage[pdftex]{color}
+% \usepackage{color}
+\definecolor{urlcolor}{rgb}{0,0.5,0}
+\definecolor{linkcolor}{rgb}{0.5,0,0}
+\definecolor{citecolor}{rgb}{0,0,0.5}
+\usepackage[pdfpagemode=UseOutlines,urlcolor=urlcolor,linkcolor=linkcolor,citecolor=citecolor,colorlinks=true]{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{natbib}
+\usepackage{enumerate}
+
+%% to be compiled using knitr: library(knitr); knit(file)
+%% for inline R code: if the inline code is not correctly parsed, you will see a message
+\newcommand{\rinline}[1]{???}
+%% begin.rcode setup, include=TRUE, echo=FALSE, results="hide"
+% if("knitr" %in% .packages()) {
+% opts_chunk$set(fig.path='figure/latex-', cache.path='cache/latex-')
+% #opts_chunk$set(cache = TRUE, autodep = TRUE) # cache everything by default
+% #opts_knit$set(latex.options.color = list("pdftex")) # use latex color package with option for pdftex
+% opts_chunk$set(indent = "  ") # indent by 2 whitespaces
+% opts_chunk$set(echo = FALSE, results = "hide") # hide everything but plots by default
+% opts_chunk$set(fig.width=10, fig.height=5.5) # set default size of figures
+% #opts_chunk$set(echo = TRUE, results = "markup") # show everything incl. plots by default
+% Sys.setlocale(,"en_GB.utf8")
+% }
+%% end.rcode
+
+\usepackage{amsmath,amsfonts,amssymb}
+% \usepackage{bbold}
+% \usepackage{dsfont}
+% \usepackage{mathrsfs}
+% \numberwithin{equation}{section}
+% \usepackage{textcomp}
+% \usepackage[amsmath,thref,thmmarks,hyperref]{ntheorem}
+% \theoremseparator{:}
+% \theoremsymbol{\raisebox{2pt}{\scriptsize\ensuremath{\Diamond}}}
+% \newtheorem{Prop}{Proposition}%[section]
+% \newtheorem{Thm}[Prop]{Theorem}
+% \newtheorem{Lem}[Prop]{Lemma}
+% \newtheorem{Cor}[Prop]{Corollary}
+% \theorembodyfont{\upshape}
+% \newtheorem{Rem}[Prop]{Remark}
+% \newtheorem{Def}[Prop]{Definition}
+% \newtheorem{Ex}[Prop]{Example}
+% \theoremstyle{nonumberplain}
+% \theoremheaderfont{\scshape}
+% \theorembodyfont{\upshape}
+% \theoremsymbol{\raisebox{1pt}{\scriptsize\ensuremath{\Box}}}
+% \newtheorem{Proof}{Proof}
+% \newtheorem{Noproof}{Without proof}
+
+% \newcommand{\gqq}[1]{\glqq{}#1\grqq{}}
+\newcommand{\eqn}[1]{\begin{equation}#1\end{equation}}
+% \newcommand{\eqns}[1]{\begin{equation*}#1\end{equation*}}
+% \newcommand{\mat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+% \newcommand{\smat}[1]{\bigl(\begin{smallmatrix}#1\end{smallmatrix}\bigr)}
+% \newcommand{\iii}[1]{\begin{enumerate}[(i)]#1\end{enumerate}}
+\newcommand{\term}[1]{\textbf{#1}}
+% \newcommand{\lang}[2]{\textup{#1} \textsl{#2}}
+% \newcommand{\engl}[1]{\textup{engl.} \textsl{#1}}
+% \newcommand{\lat}[1]{\textsl{#1}}
+
+\renewcommand{\P}{\mathbf{P}}
+\DeclareMathOperator{\E}{\mathbf{E}}
+\DeclareMathOperator{\Var}{\mathbf{Var}}
+\DeclareMathOperator{\Cov}{\mathbf{Cov}}
+% \DeclareMathOperator{\Cor}{\mathbf{Cor}}
+% \DeclareMathOperator{\Med}{\mathbf{Med}}
+% \DeclareMathOperator{\MSE}{\mathbf{MSE}}
+% \DeclareMathOperator{\MSEP}{\mathbf{MSEP}}
+% \DeclareMathOperator{\Bias}{\mathbf{Bias}}
+% \DeclareMathOperator{\se}{\mathbf{s.e.}}
+% \DeclareMathOperator{\linspan}{\mathbf{span}}
+\DeclareMathOperator{\tr}{\mathbf{tr}}
+% \DeclareMathOperator{\Dim}{\mathbf{dim}}
+% \DeclareMathOperator{\re}{\mathbf{Re}}
+% \DeclareMathOperator{\im}{\mathbf{Im}}
+% \renewcommand{\Re}{\re}
+% \renewcommand{\Im}{\im}
+% \DeclareMathOperator{\Arg}{\mathbf{Arg}}
+% \DeclareMathOperator*{\argmin}{argmin}
+% \DeclareMathOperator*{\argmax}{argmax}
+% \DeclareMathOperator{\rk}{\mathbf{rk}}
+\DeclareMathOperator{\supp}{\mathbf{supp}}
+% \DeclareMathOperator{\esup}{\mathbf{ess\,sup}}
+% \DeclareMathOperator{\sgn}{\mathrm{sgn}}
+\newcommand{\N}{\mathbf{N}}
+% \newcommand{\Z}{\mathbf{Z}}
+% \newcommand{\Q}{\mathbf{Q}}
+\newcommand{\R}{\mathbf{R}}
+% \newcommand{\C}{\mathbf{C}}
+\newcommand{\I}{\mathbf{I}}
+% \newcommand{\Id}{\mathbf{Id}}
+\newcommand{\ind}{\mathds{1}}
+% \newcommand{\Pot}{\mathcal{P}}
+% \newcommand{\trans}{'}
+% \newcommand{\1}{\mathbf{1}}
+% \newcommand{\e}{\imath}
+\newcommand{\T}{^{\!\top}}%mathrm{t}}
+% \renewcommand{\c}{^{\scriptscriptstyle\complement}}
+% \newcommand{\orth}{^\bot}
+% \DeclareMathOperator{\vc}{\mathbf{vec}}
+% \renewcommand{\vec}{\vc}
+% \DeclareMathOperator{\col}{\mathcal{L}}
+% \DeclareMathOperator{\ke}{\mathbf{ke}}
+% \DeclareMathOperator{\rk}{\mathbf{rk}}
+\newcommand{\eps}{\varepsilon}
+% \newcommand{\Eps}{\mathcal{E}}
+% \newcommand{\Beta}{\mathcal{B}}
+\newcommand{\ph}{\varphi}
+\newcommand{\Sigm}{\varSigma}
+\newcommand{\st}{\,:\,}
+\newcommand{\cond}{\,\vert\,}
+\newcommand{\de}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
+% \newcommand{\fuconv}{\stackrel{\text{f.\"u.}}{\rightarrow}}
+\newcommand{\Lpconv}[1][p]{\stackrel{\L^{#1}}{\rightarrow}}
+% \newcommand{\muconv}[1][\mu]{\stackrel{#1}{\rightarrow}}
+% \newcommand{\wconv}{\Rightarrow}
+% \newcommand{\dconv}{\stackrel{\mathcal{D}}{\rightarrow}}
+% \newcommand{\pconv}{\stackrel{\P}{\rightarrow}}
+% \newcommand{\qconv}{\stackrel{\L^2}{\rightarrow}}
+\newcommand{\iid}{\stackrel{\text{\textup{iid}}}{\sim}}
+% \newcommand{\norm}{\mathcal{N}}
+% \newcommand{\Binom}{\mathrm{Binom}}
+% \newcommand{\Unif}{\mathrm{Unif}}
+% \newcommand{\Pois}{\mathrm{Pois}}
+% \newcommand{\Exp}{\mathrm{Exp}}
+\newcommand{\A}{\mathcal{A}}
+% \newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathcal{F}}
+% \newcommand{\G}{\mathcal{G}}
+% \newcommand{\Term}{\mathcal{T}}
+% \newcommand{\HH}{\mathcal{H}}
+\renewcommand{\L}{\mathrm{L}}
+% \newcommand{\Ell}{\mathscr{L}}
+% \newcommand{\cont}{\mathit{C}}
+% \newcommand{\contb}{\mathit{C}_b}
+% \newcommand{\contc}{\mathit{C}_C}
+% \newcommand{\AC}{\text{\upshape AC}}
+% \newcommand{\BV}{\text{\upshape BV}}
+% \newcommand{\ord}{\mathrm{o}}
+% \newcommand{\Ord}{\mathrm{O}}
+% \renewcommand{\O}{\mathcal{O}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+% \newcommand{\leb}{\boldsymbol\lambda}
+% % from http://tex.stackexchange.com/questions/54385/spacing-between-triple-vertical-lines
+% \newcommand{\VERT}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+% \newcommand{\dsi}{\pmb\cdot}
+
+\title{Monitoring the spread of COVID-19 by estimating reproduction numbers over time}
+\author{%
+    Thomas Hotz$^1$, Matthias Glock$^1$, Stefan Heyder$^1$, Sebastian Semper$^1$,\\ Anne Böhle$^2$, Alexander Krämer$^2$\\[24pt]
+    $^1$ Institut für Mathematik, Technische Universität Ilmenau\\
+    {\fontsize{10}{12}\selectfont\texttt{\{thomas.hotz,matthias.glock,stefan.heyder,sebastian.semper\}@tu-ilmenau.de}}\\[6pt]
+    $^2$ School of Public Health, Bielefeld University\\
+    {\fontsize{10}{12}\selectfont\texttt{\{anne.boehle,alexander.kraemer\}@uni-bielefeld.de}}
+}
+\date{\rinline{format(Sys.time(), '%d/%m/%y', tz = "GMT")}}
+
+\begin{document}
+
+%% begin.rcode libraries, include=TRUE, echo=FALSE, cache=FALSE
+% library(lubridate, warn.conflicts=FALSE)
+%% end.rcode
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\maketitle
+
+\begin{abstract}
+To control the current outbreak of the Coronavirus Disease 2019, constant monitoring of the epidemic is required since, as of today, no vaccines or antiviral drugs against it are known.
+We provide daily updated estimates of the reproduction number over time at \url{https://stochastik-tu-ilmenau.github.io/COVID-19/}.
+In this document, we describe the estimator we are using which was developed in \citep{fraser2007}, derive its asymptotic properties, and we give details on its implementation.
+Furthermore, we validate the estimator on simulated data, demonstrate that estimates on real data lead to plausible results, and perform a sensitivity analysis.
+Finally, we discuss why the estimates obtained need to be interpreted with care.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+
+As the Coronavirus Disease 2019 (COVID-19) threatens humanity, unprecedented measures to stop its spread have been adopted around the globe.
+In many countries, schools have closed and curfews have been imposed.
+Given the enormous burden these measures place on the economy, sooner or later they have to be relaxed.
+This raises important questions for policymakers and public health specialists.
+How large is the effect of these measures?
+Do they effectively stop the spread of COVID-19?
+What will happen if restrictions get relaxed?
+And in the future, how can we see whether the epidemic is getting out of hands again?
+
+To answer these questions, one needs to know how fast the epidemic is growing.
+In infectious disease epidemiology, this is measured by the \term{reproduction number}, i.e. the mean number of people someone who got infected will infect in the course of time.
+Its \term{critical value} clearly is $1$: for larger values the epidemic will grow, for smaller values it will diminish.
+
+Since conditions may change in the future, e.g. when countermeasures are introduced or lifted, the reproduction number may also change.
+We therefore follow \citet{fraser2007} and consider what he calls the \emph{instantaneous} reproduction number $R(t)$ at time $t$, and for which he suggests the estimator
+\begin{equation}\label{fraser}
+\hat R(t) = \frac{I(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}
+\end{equation}
+where $I(t)$ is the number of incident cases at time $t$ and $w$ specifies the so-called \term{infectivity profile}, i.e. the distribution of the \term{generation time}, which is assumed to be known.
+To the best of our knowledge, this estimator has first been published by Fraser and others in \citep{grassly2006}.
+An overview of other estimators may be found in \citep{Obadia2012}.
+
+We explain the probabilistic model behind this estimator following \cite[Web Appendix 1]{cori2013} in Section~\ref{DerivEst}.
+In addition, we analytically derive asymptotic confidence intervals (with details given in Appendix~\ref{ConfInt}) which are simple to compute.
+Here, we differ from \citet{grassly2006} who use computationally more elaborate resampling techniques, namely the bootstrap, to obtain confidence intervals; \citet{cori2013} on the other hand take a Bayesian approach, assuming a certain gamma prior distribution for $R(t)$.
+
+In Section~\ref{SpecCOVID}, some epidemiologically relevant properties of COVID-19 are discussed, and the infectivity profile is modelled.
+The estimator and corresponding confidence intervals are validated on simulated data in Section~\ref{ValidSim}.
+Then, we apply this methodology to real data for Germany in Section~\ref{ApplReal}, followed by a sensitivity analysis in Section~\ref{SensAnal}.
+Finally, the results are summarised in Section~\ref{DiscOut}, also discussing difficulties with this approach.
+
+In order to continuously monitor the spread of COVID-19, a designated website has been created where the results of our analysis are shown and updated daily.
+It is available at \url{https://stochastik-tu-ilmenau.github.io/COVID-19/} in English for all affected countries based on the data from \citep{jhu} as well as in German for Germany and its federal states based on the data from \citep{rki} at \url{https://stochastik-tu-ilmenau.github.io/COVID-19/germany}.
+The source code for that website as well as for this report may be found at \url{https://github.com/Stochastik-TU-Ilmenau/COVID-19/tree/gh-pages}, rendering this fully reproducible research.
+We note that a similar analysis using the Bayesian approach of \citep{cori2013} was presented by \citet{abbott2020} with updates at \url{https://epiforecasts.io/covid/posts/global/}.
+% However, as of 06/04/2020, that analysis appears not to have been updated since 19/03/2020.
+
+
+\section{Derivation of the estimator}
+\label{DerivEst}
+
+The following is an adaptation of the modelling in \citep{fraser2007} and \cite[Web Appendix 1]{cori2013}.
+
+\term{Time} is taken to be discrete, i.e. we consider days $t \in \mathbb Z$, since the spread of the epidemic shows a strong intraday variability (e.g., there are fewer infections during the night when people are at sleep), and the time scales of incubation and infectious period are on the order of days. Also, cases are reported on a daily basis.
+
+The number of \term{incidences}, i.e. newly infected cases, at day $t$ will be given as $I(t)$.
+The \term{infection age} of an infected person in days, i.e. the number of day elapsed since the infection, is denoted by $\tau \in \mathbb N_0$.
+
+The spread of the epidemic depends strongly on the time-dependent \term{transmissibility} $\beta(t, \tau) \geq 0$ specifying the expected number of susceptible individuals an infectious person at infection age $\tau$, a so-called \term{primary case}, will infect at time $t$.
+The transmissibility is in particular affected by the \term{contact rate}, i.e. the mean number of people an infected person meets per day, and the \term{infectiousness} of the primary case.
+The former is addressed by \term{non-pharmaceutical interventions} such as school closures and curfews, the latter is a virological feature of the disease.
+Therefore we make a crucial \term{structural assumption}, namely that they separate:
+\eqn{ \beta(t, \tau) = R(t)\, w(\tau), \label{struct}}
+where $R(t) \geq 0$ denotes the (instantaneous) \term{reproduction number} at time $t$ of transmission, i.e. when the \term{secondary case} gets infected by the primary case, and $w(\tau) \in [0,1]$ specifies the \term{infectivity profile} at infection age $\tau$.
+This models the belief that contact rates change over time but the infectiousness of the primary case depends only on $\tau$
+which is debatable, however: when rules for isolation or quarantine change are loosened, e.g. because hospital capacities are exhausted, $\beta$ will change differently for different values of $\tau$; we will reiterate this point in Section~\ref{DiscOut}.
+It is also reflected in the fact that any constant factor may be alternatively incorporated into $R$ or $w$.
+The latter is therefore standardised such that
+\eqn{\sum_{\tau = 0}^\infty w(\tau) = 1,}
+i.e. $w$ is a \term{probability distribution} which can be interpreted as follows: for a fixed time $t$ randomly pick a pair of individuals where the first one is a primary case that got infected at time $t$, in turn infecting the second one later; $w(\tau)$ is the probability that the second case got infected at time $t+\tau$, i.e. at infection age $\tau$ of the primary case.
+$w$ thus specifies the distribution of the \term{generation time}.
+It is assumed to be \term{known}; see Section~\ref{SpecCOVID} on how we model it for COVID-19.
+
+In a \term{stochastic model} for the dynamics of the epidemic, $I(t)$ is given as the number of successful transmissions from an infectious person to someone who is susceptible to the disease.
+Assuming that each possible transmission succeeds independently (thus ignoring the possibility of multiple infections) with a probability corresponding to $\beta$, and if there are many possible transmissions, $I(t)$ is -- by the law of small numbers -- approximately \term{Poisson distributed} conditional on the past. The intensity of this Poisson distribution is equal to
+\eqn{ \E(I(t) \cond I(t-1), \dots) = \sum_{\tau=1}^\infty \beta(t,\tau) I(t-\tau) = R(t) \sum_{\tau=1}^\infty w(\tau) I(t-\tau)\,. \label{condE}}
+Here, transmissions \term{on the same day} are ruled out, i.e. $w(0) = 0$, which is a realistic assumption since the incubation period will be at least one day.
+
+The last equation suggests the \term{estimator} $\hat R(t)$ for $R(t)$ given in \cite[Equation (9)]{fraser2007},
+\eqn{ \hat R(t) = \frac{I(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}\,. \label{estim}}
+% - taking expectations, the above equation implies the **renewal equation**, cf. Equation (1) in @fraser2007,
+% $$ \mathbb E I(t) = R(t) \sum_{\tau=1}^\infty w(\tau)\ \mathbb E I(t-\tau) $$
+% - for constant $R=R(t)$ this difference equation has the **solution**
+% $$ \mathbb E I(t) = R^t\ \mathbb E I(0) $$
+
+Note that the \term{case reproduction number} $R_c(t)$, i.e. the expected number of people a primary case infected at time $t$ will infect, is given by, cf. \cite[Equations (2) and (8)]{fraser2007},
+\eqn{ R_c(t) = \sum_{\tau=1}^\infty \beta(t+\tau, \tau) = \sum_{\tau=1}^\infty R(t+\tau)\,w(\tau)\,. }
+This is of course difficult or even impossible to estimate as it depends on future contact rates, i.e. on countermeasures that will be imposed.
+However, assuming that conditions remain the same in the future, i.e. $R(s) = R(t)$ for $s > t$, we obtain $R(t)$ again, cf. \cite[Equation (3)]{fraser2007},
+\eqn{ \sum_{\tau=1}^\infty R(t+\tau) w(\tau) = R(t) \sum_{\tau=1}^\infty w(\tau) = R(t)\,.}
+This explains why $R(t)$ is called \emph{reproduction number}.
+
+For large intensities, i.e. if the conditional expectation in Equation~\eqref{condE} is large, the distribution of $\hat R(t)$ can be well approximated by a Gaussian distribution, with small standard errors.
+From this, \term{asymptotic confidence intervals} can be derived, see Section~\ref{ConfInt}.
+If $q$ denotes the $(1-\frac\alpha 2)$-quantile of the standard normal distribution then
+\eqn{ \Biggl[\hat R(t) - q \sqrt{\frac{\hat R(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}}, \hat R(t) + q \sqrt{\frac{\hat R(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}} \Biggr] }
+is an (asymptotic) $(1-\alpha)$-confidence interval for $R(t)$.
+Note that in practice ten or more incident cases should suffice for the asymptotics to be reliable.
+
+\section{Specifics of COVID-19}
+\label{SpecCOVID}
+
+%% begin.rcode covid19
+% # the estimator
+% repronum <- function(
+%     new.cases, # I
+%     profile, # w
+%     delay = 0, # Delta
+%     conf.level = 0.95, # 1-alpha
+%     pad.zeros = TRUE
+% ) {
+%     # pad zeros if desired
+%     if(pad.zeros) new.cases <- c(rep(0, length(profile) - 1), new.cases)
+% 
+%     # compute convolution over tau
+%     denominator <- as.numeric(stats::filter(new.cases, c(0, profile),
+%         method = "convolution", sides = 1))
+% 
+%     # estimates
+%     repronum <- new.cases / denominator
+% 
+%     # standard errors
+%     repronum.se <- sqrt(repronum / denominator) + 1 / 8 / sqrt(repronum) / denominator / sqrt(denominator)
+% 
+%     # shift by delay
+%     repronum <- c(repronum, rep(NA, delay))[(1:length(repronum)) + delay]
+%     repronum.se <- c(repronum.se,
+%         rep(NA, delay))[(1:length(repronum.se)) + delay]
+% 
+%     # standard normal qunatile
+%     q <- qnorm(1 - (1-conf.level) / 2)
+% 
+%     # return data.frame with as many rows as new.cases
+%     ret <- data.frame(
+%         repronum = repronum,
+%         repronum.se = repronum.se,
+%         ci.lower = repronum - q * repronum.se,
+%         ci.upper = repronum + q * repronum.se
+%     )
+%     if(pad.zeros) ret[-(1:(length(profile)-1)),] else ret
+% }
+% 
+% infectivity <- c((0:3)/3, 1, (5:0)/5)
+% names(infectivity) <- seq_along(infectivity)
+% infectivity <- infectivity / sum(infectivity)
+%% end.rcode
+
+As COVID-19 is a new disease, first being described at the end of 2019, its virological features have not yet been conclusively determined.
+Nonetheless, we tried to choose parameters in agreement with the current state of research.
+
+For comparisons, we note that in a population without any countermeasures, the \term{basic reproduction number} $R_0$ is believed to be given by some value between 2.4 and 4.1 \citep{read2020}.
+
+The \term{incubation time}, i.e. the time from infection until symptom onset, ranges from 1 to 14 days with a mean of 5 to 6 days; the virus can be detected from 1 to 2 days before symptom onset for up to 7 to 12 days in moderate cases, and even up to two weeks in severe cases \citep{who2020}.
+We therefore may indeed assume that $w(0) = 0$.
+
+For modelling the infectivity profile $w$, it is important to realise that it is not proportional to the amount of viral specimens that can be detected in an infected person's sputum, say.
+Indeed, since severe cases are very likely to be hospitalised and thus strictly isolated, the probability of infecting someone more than 12 days after infection is very low.
+Similarly, before symptom onset the probability for transmission might be very low since no sputum is spread.
+
+The infectivity profile is therefore set to start with $0$ on the first day after infection with a linear increase up to day 4, remaining constant up to day 6 and decaying linearly again until being $0$ at day 11; see Figure~\ref{infProf}.
+% 
+\begin{figure}[!p]
+%% begin.rcode infProf
+% par(mar=c(4,4,0,0)+0.1)
+% barplot(c("0"=0, infectivity) * 100, xlab = "infection age", ylab = "infectivity profile in %")
+%% end.rcode
+\caption{Modelled infectivity profile $w$.}\label{infProf}
+\end{figure}
+% 
+In Section~\ref{SensAnal} we discuss the effect this choice has on the analysis.
+
+
+\section{Validation on simulated data}
+\label{ValidSim}
+
+%% begin.rcode sim
+% library(reticulate)
+% use_python("/usr/bin/python3")
+% source_python("../../code/seir.py")
+% np <- import('numpy')
+% 
+% set.seed(1234)
+% 
+% # totally random number of people
+% n_people <- as.integer(1 * 1e6)
+% 
+% # initially latent people
+% n_latent <- as.integer(100)
+% 
+% # time until latent gets infectious
+% tI <- as.integer(3)
+% 
+% # time until infectious enters recovered/dead/non-infectious state
+% tR <- as.integer(4)
+% 
+% # corresponding transition probabilities
+% pI <- 1 / tI
+% pR <- 1 / tR
+% 
+% # times of intervention
+% interv1 <- 30
+% interv2 <- 50
+% 
+% # basic reproduction number
+% R0 <- 2.5
+% 
+% # reproduction numbers after first and section intervention
+% R1 <- 0.7
+% R2 <- 1.3
+% 
+% # infection probability upon contact before intervention
+% pc0 <- R0 / tR
+% 
+% # and after interventions
+% pc1 <- R1 * pR 
+% pc2 <- R2 * pR 
+% 
+% # number of paths to simulate
+% n_sim <- as.integer(1e5)
+% 
+% # time steps
+% n_steps <- as.integer(120)
+% 
+% # contact rate across the whole population
+% lstArrGInd <- np_array(rep(0:2, diff(c(0, interv1, interv2, n_steps))), dtype = "int")
+% lstArrG <- list(array(pc0, dim = c(1,1)), array(pc1, dim = c(1,1)), array(pc2, dim = c(1,1)))
+% 
+% # initial values
+% arrSEIR0 <- array(c(n_people, n_latent, 0, 0), dim = c(4, 1))
+% 
+% # inter group contact distribution
+% # this is also time dependent
+% arrG <- array(1, dim = c(1,1,n_steps))
+% 
+% arrDataStoch <- stochastic(
+%     n_sim,
+%     arrSEIR0,
+%     pI,
+%     pR,
+%     lstArrGInd,
+%     lstArrG,
+%     "simulation"
+% )
+% 
+% # dims: (S,E,I,R) [x groups] x time x simulation
+% sims <- apply(np$load("simulation.npz")$f[["arrData"]], c(1, 3:4), sum)
+% dimnames(sims)[[1]] <- c("S", "E", "I", "R")
+% 
+% total.cases <- sims["E",,] + sims["I",,] + sims["R",,]
+% new.infected <- rbind(0, apply(total.cases, 2, diff))
+% new.infectious <- rbind(0, apply(sims["I",,] + sims["R",,], 2, diff))
+% 
+% 
+% w <- function(tau) {
+%     ifelse(tau == 1, 0, pI * ( (1-pR)^(tau-1) - (1-pI)^(tau-1) ) / (pI - pR) )
+% }
+% 
+% sim.infectivity <- w(1:50)
+% names(sim.infectivity) <- seq_along(sim.infectivity)
+% sim.infectivity <- sim.infectivity / sum(sim.infectivity)
+% 
+% alpha <- 0.05
+% 
+% sim.est <- apply(new.infected, 2, repronum,
+%     profile = sim.infectivity,
+%     delay = 0,
+%     conf.level = 1-alpha,
+%     pad.zeros = TRUE
+% )
+%% end.rcode
+
+\begin{figure}[!p]
+%% begin.rcode simPlotInfect
+% par(mar=c(4,4,0,0)+0.1)
+% barplot(c("0" = 0, sim.infectivity[1:30]) * 100, xlab = "infection age", ylab = "infectivity profile in %")
+%% end.rcode
+\caption{Computed infectivity profile $w$ corresponding to the simulation.}\label{simPlotInfect}
+\end{figure}
+
+
+To validate the estimator, we simulate a \term{stochastic SEIR} (a.k.a. Kermack-McKendrick) \term{model}.
+To be more precise, we consider a discrete-time Markov chain describing a population of $n = \rinline{n_people/1e6}$~million people with each individual being in one of four states: \term{susceptible}, i.e. not yet infected; \term{exposed}, more aptly called \term{latent}, i.e. infected but not yet infectious; \term{infectious}; or \term{recovered} and thus immune.
+We start at time $0$ with $\rinline{n_latent}$ latent individuals, all others initially being susceptible.
+At each time step, a susceptible person becomes infected if the virus is transmitted through contact with an infectious person; such contacts happen independently with probability $p_E$. A latent person becomes infectious with probability $p_I$, and an infectious person recovers with probability $p_R$; otherwise an individual remains in its state.
+
+This results in incubation times, i.e. times spent in the latent state, which are geometrically distributed with mean $1/ {p_I}$; for this to be $\rinline{tI}$, we set $p_I = 1/ {\rinline{tI}}$.
+Similarly, the infectious period is geometrically distributed with mean $1/ {p_R}$ which we would like to be $\rinline{tR}$, so we set $p_R = 1/ {\rinline{tR}}$.
+The corresponding infectivity profile $w$ is then given by the convolution of these two geometric convolutions.
+It can be calculated analytically, see Appendix~\ref{InfProfSEIR} for details; the result is shown in Figure~\ref{simPlotInfect}.
+Note that $w(1) = w(0) = 0$ since it takes at least one day to become latent and another one to become infectious in this model.
+
+The basic reproduction rate is then given by $R_0 = {n p_E}/{p_R}$ since an infected person on average infects $n p_E$ individuals per day (if all were susceptible) for $1/ {p_R}$ days on average.
+In order to simulate an epidemic with $R_0 = \rinline{R0}$, we set $p_E = {R_0 p_R}/n$ accordingly.
+
+Over time, the reproduction number changes naturally because more people recover and become immune: $R(t)$ is $R_0$ times the proportion of susceptible individuals at that time.
+In addition, we assume that countermeasures have been imposed at time $\rinline{interv1}$, resulting in $R(t)$ being $\rinline{R1}$ times the proportion of susceptibles afterwards, and that measures have been relaxed at time $\rinline{interv2}$, resulting in $R(t)$ being $\rinline{R2}$ times the proportion of susceptibles thereafter.
+
+Figure~\ref{simPlotSEIR} shows one simulation run.
+The resulting estimates $\hat R(t)$ and pointwise \rinline{100 * (1-alpha)}\%-confidence intervals ($\alpha = \rinline{100 * alpha}\%$ as usual) can be compared with the true reproduction rate $R(t)$ in Figure~\ref{simPlotSingle}.
+
+\begin{figure}[!p]
+%% begin.rcode simPlotSEIR
+% # proportion of susceptibles
+% prop.S <- sims["S",,] / n_people
+% 
+% par(mar=c(4,4,0,4)+0.1)
+% plot(1:n_steps, new.infected[,1], type = "l", log = "", lwd = 2,
+%     xlab = "day", ylab = "newly infected / newly infectious")
+% lines(1:n_steps, new.infectious[,1], col="purple", lwd = 2)
+% abline(v = c(interv1, interv2) + 0.5, col = "red", lty = 3, lwd = 2)
+% abline(h = 0, col = "grey80")
+% par(new = TRUE)
+% plot(1:n_steps, prop.S[,1] * 100, type = "l", log = "", lwd = 2,
+%     col = "blue", xlab = "", ylab = "", lty = 2, axes = FALSE)
+% abline(h = 1, col = rgb(0.5,0.5,1), lty = 2)
+% axis(4)
+% mtext("proportion of susceptibles in %", 4, 3)
+%% end.rcode
+\caption{One simulation of the SEIR model; black solid line (left axis): newly infected; purple solid line (left axis): newly infectious; dashed blue line (right axis): proportion of susceptibles; vertical red dotted lines: intervention times.}\label{simPlotSEIR}
+\end{figure}
+
+\begin{figure}[!p]
+%% begin.rcode simPlotSingle
+% # true R
+% R <- rep(c(R0, R1, R2), diff(c(0, interv1, interv2, n_steps))) * prop.S[,1]
+% 
+% par(mar=c(4,4,0,4)+0.1)
+% with(sim.est[[1]], {
+%     plot(1:n_steps, repronum, type = "l", log = "y", lwd = 2,
+%         ylim = c(0.5, 5),
+%         xlab = "day", ylab = "R(t)")
+%     abline(h = 1, col = "red")
+%     abline(h = c(R0, R1, R2), col = "red", lty = 3)
+%     abline(v = c(interv1, interv2) + 0.5, col = "red", lty = 3, lwd = 2)
+%     lines(1:n_steps, ci.lower, lty = 2)
+%     lines(1:n_steps, ci.upper, lty = 2)
+%     lines(1:n_steps, R, col = "blue", lty = 1, lwd = 2)
+% })
+%% end.rcode
+\caption{One simulation of the SEIR model; black solid line: $\hat R(t)$; black dashed lines: pointwise \rinline{100 * (1-alpha)}\%-confidence intervals; blue solid line: $R(t)$; vertical red dotted lines: intervention times; horizontal red dotted lines: corresponding reproduction numbers without decrease in susceptibles taken into account.}\label{simPlotSingle}
+\end{figure}
+
+The simulation has been repeated $10^{\rinline{log10(n_sim)}}$ times, and for each time point the proportion of confidence intervals containing the true reproduction number has been determined, see Figure~\ref{simCover}.
+They appear not quite to have the desired nominal coverage but given that they are only asymptotic confidence intervals, and modelling errors are typically much larger, we consider them acceptable in practice.
+
+\begin{figure}[!p]
+%% begin.rcode simCover
+% coverage <- sapply(1:n_sim, function(i) {
+%     se <- sim.est[[i]]
+%     true.R <- rep(c(R0, R1, R2), diff(c(0, interv1, interv2, n_steps))) * prop.S[,i]
+%     se$ci.lower <= true.R & se$ci.upper >= true.R
+% })
+% par(mar=c(4,4,0,4)+0.1)
+% plot(rowMeans(coverage) * 100, type = "l", xlab = "day", ylab = "coverage probability in %", 
+%     ylim = c(0,100), lwd = 2)
+% abline(h = (1-alpha) * 100, col = "blue", lty = 2)
+% abline(h = c(0,100), col = "grey80", lty = 1)
+% abline(v = c(interv1, interv2) + 0.5, col = "red", lty = 3, lwd = 2)
+%% end.rcode
+\caption{Estimated coverage probability based on $10^{\rinline{log10(n_sim)}}$ simulations (black solid line); horizontal blue dahed line: nominal coverage (\rinline{100 * (1-alpha)}\%); vertical red dotted lines: intervention times.}\label{simCover}
+\end{figure}
+
+These simulations demonstrate how well the estimator is able to detect changes in the reproduction number.
+From a practical viewpoint, this is an overly optimistic result. 
+In fact, Equation~\eqref{condE} and consequently the estimator $\hat R(t)$ in Equation~\eqref{estim} are based on the number of newly infected cases.
+But \term{infection dates} are rarely known.
+Instead, cases are reported when they are tested with a positive test result.
+In our simple simulation, one should therefore consider the \term{newly infectious cases} at day $t$ as input data $I(t)$ for the estimator.
+Note that their increase lags behind the one of the \term{newly infected cases}, i.e. the \term{newly latent cases}, by the incubation time, see Figure~\ref{simPlotSEIR} where they lag behind by about $1$ day, the mode of the incubation time distribution.
+
+\begin{figure}[!p]
+%% begin.rcode simPlotSingleInfectious
+% sim.est.infectious <- apply(new.infectious, 2, repronum,
+%     profile = sim.infectivity,
+%     delay = 1,
+%     conf.level = 1-alpha,
+%     pad.zeros = TRUE
+% )
+% shift <- 1
+% 
+% par(mar=c(4,4,0,4)+0.1)
+% with(sim.est.infectious[[1]], {
+%     plot(1:n_steps, repronum, type = "l", log = "y", lwd = 2,
+%         ylim = c(0.5, 5),
+%         xlab = "day", ylab = "R(t)")
+%     abline(h = 1, col = "red")
+%     abline(h = c(R0, R1, R2), col = "red", lty = 3)
+%     abline(v = c(interv1, interv2) + 0.5, col = "red", lty = 3, lwd = 2)
+%     lines(1:n_steps, ci.lower, lty = 2)
+%     lines(1:n_steps, ci.upper, lty = 2)
+%     lines(1:n_steps, R, col = "blue", lty = 1, lwd = 2)
+% })
+%% end.rcode
+\caption{Estimator based on the newly infectious of one simulation of the SEIR model shifted by \rinline{shift} day; black solid line: $\hat R(t)$; black dashed lines: pointwise \rinline{100 * (1-alpha)}\%-confidence intervals; blue solid line: $R(t)$; vertical red dotted lines: intervention times; horizontal red lines: corresponding reproduction numbers without decrease in susceptibles taken into account. This is to be compared with Figure~\ref{simPlotSingle} where the estimator is based on the newly infected cases.}\label{simPlotSingleInfectious}
+\end{figure}
+
+We use a na\"ive approach to deal with this which we call \term{infection-to-observation period}: we shift the estimator back by the observed lag, i.e. by \rinline{shift}~day.
+The result is shown in Figure~\ref{simPlotSingleInfectious} where the jump in $R(t)$ leads only to a rapid change of $\hat R(t)$, approaching the true value $R(t)$ exponentially fast, though.
+For real data, the infection-to-observation period is even larger, since symptomatic cases are usually not reported immediately. This will be taken into account in the following section.
+
+
+\section{Application to real data}
+\label{ApplReal}
+
+\begin{figure}[!p]
+%% begin.rcode real
+% report.delay <- 7
+% rki <- read.csv("../../data/clean/data_ger_bundl.csv", colClasses=c(date="Date"))
+% 
+% laender <- reshape(rki[,c("date", "day", "reg0.id", "new.cases")], v.names="new.cases", idvar="date", timevar="reg0.id", direction="wide")
+% laender <- laender[order(laender$date),]
+% maxday <- max(laender$day)
+% laender <- laender[laender$day <= maxday - 3,]
+% mindate <- as.Date("2020-03-01")
+% maxdate <- max(laender$date)
+% 
+% bund <-cbind(laender[,1:2], new.cases=rowSums(laender[,-(1:2)]))
+% 
+% par(mar=c(4,4,0,4)+0.1)
+% with(bund, {
+%     plot(date, new.cases, type="h", xlab="reporting date", ylab="newly reported cases", xlim=c(mindate, maxdate), lwd=1, axes=F)
+%     box()
+%     axis(1, at=laender$date[format(laender$date, "%w") == 1], label=format(laender$date[format(laender$date, "%w") == 1], "%d/%m/%y"))
+%     axis(2)
+% })
+% 
+% 
+% bund.est <- cbind(bund, repronum(
+%     new.cases = bund$new.cases,
+%     profile = infectivity,
+%     delay = report.delay,
+%     conf.level = 1-alpha
+% ))
+%% end.rcode
+\caption{Newly reported cases for Germany over time, based on data from the \citet{rki}.}\label{bund}
+\end{figure}
+
+\begin{figure}[!p]
+%% begin.rcode bundEst
+% par(mar=c(4,4,0,4)+0.1)
+% with(bund.est[bund.est$date >= mindate & !is.na(bund.est$repronum),], {
+%     plot(date, repronum, type = "l", log = "y", lwd = 2, xlim=c(mindate, maxdate),
+%         xlab = "date", ylab = "estimated R(t)", axes=F)
+%     box()
+%     axis(1, at=laender$date[format(laender$date, "%w") == 1], label=format(laender$date[format(laender$date, "%w") == 1], "%d/%m/%y"))
+%     axis(2, at=1:9)
+%     axis(2, at=1:9 / 10)
+%     abline(h = 1, col = "red")
+%     abline(v = as.Date(c("2020-03-13", "2020-03-25")), col = "red", lty = 3, lwd = 2)
+%     lines(date, ci.lower, lty = 2)
+%     lines(date, ci.upper, lty = 2)
+% })
+%% end.rcode
+\caption{Estimated reproduction numbers for Germany over time (solid line) with pointwise \rinline{(1-alpha)*100}\%-confidence intervals (dashed lines); vertical red dashed lines indicate the time period over which countermeasures have been implemented, cf. Table~\ref{npi}.}\label{bundEst}
+\end{figure}
+
+As an example, we consider data for Germany and its federal states (Bundesländer) provided by the \citet{rki}, see Figure~\ref{bund} for the total daily reported cases.
+Each case in this dataset is labelled with a \term{reporting date}, i.e. the day when the local health authority (Gesundheitsamt) has been notified about the case.
+Of course, this is not the day of symptom onset, let alone the day of infection which is needed for the estimator in Equation~\eqref{estim}.
+We therefore set an \term{infection-to-observation period} by which we backdate the cases.
+It is pragmatically chosen as 5~days of incubation time (cf. Section~\ref{SpecCOVID}) plus 2~more days \term{reporting delay} for testing etc., i.e. the infection-to-observation period is set to \rinline{report.delay}~days.
+
+Since cases are reported to local health authorities, then collected at the level of states who in turn report them to the federal Robert Koch-Institut, they appear in the dataset a few days later, although with the date of reporting to the local health authority.
+Therefore, we exclude data from yesterday and the two days before.
+
+\begin{table}[!t]
+\begin{center}
+\begin{tabular}{l|l}
+\textbf{date of implementation} & \textbf{measure} \\[3pt]
+13--18/03/2020 (mostly 16/03/2020) & school closures \\
+14--22/03/2020 (mostly 16--22/03/2020) & closure of institutions, restaurants etc. \\
+20--25/03/2020 (mostly 22/03/2020) & contact restrictions
+\end{tabular}
+\end{center}
+\caption{Summary of starting dates for non-pharmaceutical interventions introduced by federal states in Germany.}\label{npi}
+\end{table}
+
+Based on the backdated data and the infectivity profile from Section~\ref{SpecCOVID} (see Figure~\ref{infProf}), we estimated the reproduction numbers for Germany over time, see Figure~\ref{bundEst}.
+Note that there are no estimates for the last \rinline{report.delay}~days for which new cases are shown in Figure~\ref{bund} due to the infection-to-observation period.
+
+Starting with Bremen on 13/03/2020, more and more restrictive non-pharmaceutical countermeasures have been adopted by the federal states; see Table~\ref{npi} for a short overview.
+Their effect on the reproduction number is clearly visible in Figure~\ref{bund}, resulting in a reproduction number of less than 1 with all measures in place.
+
+The strong weekly pattern in the estimates is due to the fact that less cases are reported around weekends, cf. Figure~\ref{bund} where Mondays are marked on the horizontal axis.
+We do not compute an average over a sliding window of seven days so the viewer immediately recognizes the size of such artefacts, warning her to be overly confident in the results.
+In fact, these artefacts are much larger than the statistical uncertainty due to the stochastic nature of the epidemic which is reflected in the confidence intervals.
+
+
+\section{Sensitivity analysis}
+\label{SensAnal}
+
+The estimator depends on two ingredients, the data, of course, and the infectivity profile.
+For Germany, there is a second dataset provided by \citet{jhu} whose source are mainly official data, too, but collected at the local level once they are available.
+In particular, as soon as data become available, they are marked as reported on that very day.
+They therefore show a far less pronounced weekday effect than the data from the \citet{rki}, see Figure~\ref{germany} and compare with Figure~\ref{bund}.
+Moreover, data are not backedited, so even yesterday's data are final and can be used.
+
+\begin{figure}[!p]
+%% begin.rcode germany
+% jhu <- read.csv("../../data/clean/data_world_jh.csv", colClasses=c(date="Date"))
+% germany <- jhu[jhu$reg0.id=="DEU",]
+% germany <- germany[order(germany$date),]
+% 
+% par(mar=c(4,4,0.1,4)+0.1)
+% with(germany, {
+%     plot(date, new.cases, type="h", xlab="reporting date", ylab="newly reported cases", xlim=c(mindate, max(germany$date)), axes=F)
+%     box()
+%     axis(1, at=date[format(date, "%w") == 1], label=format(date[format(date, "%w") == 1], "%d/%m/%y"))
+%     axis(2)
+% })
+% 
+% 
+% germany.est <- cbind(germany, repronum(
+%     new.cases = germany$new.cases,
+%     profile = infectivity,
+%     delay = report.delay,
+%     conf.level = 1-alpha
+% ))
+%% end.rcode
+\caption{Newly reported cases for Germany over time, based on data from the \citet{jhu}; compare with Figure~\ref{bund}.}\label{germany}
+\end{figure}
+
+\begin{figure}[!p]
+%% begin.rcode germanyEst
+% par(mar=c(4,4,0,4)+0.1)
+% with(germany.est[germany.est$date >= mindate & !is.na(germany.est$repronum),], {
+%     plot(date, repronum, type = "l", log = "y", lwd = 2, xlim=c(mindate, max(germany$date)),
+%         xlab = "date", ylab = "estimated R(t)", axes=F)
+%     box()
+%     axis(1, at=date[format(date, "%w") == 1], label=format(date[format(date, "%w") == 1], "%d/%m/%y"))
+%     axis(2, at=1:9)
+%     axis(2, at=1:9 / 10)
+%     abline(h = 1, col = "red")
+%     abline(v = as.Date(c("2020-03-13", "2020-03-25")), col = "red", lty = 3, lwd = 2)
+%     lines(date, ci.lower, lty = 2)
+%     lines(date, ci.upper, lty = 2)
+% })
+% with(bund.est[bund.est$date >= mindate & !is.na(bund.est$repronum),], {
+%     lines(date, repronum, lwd = 2, col = "blue", lty = 3)
+%     lines(date, ci.lower, lty = 4, col = "blue")
+%     lines(date, ci.upper, lty = 4, col = "blue")
+% })
+%% end.rcode
+\caption{Estimated reproduction numbers for Germany over time (solid/dotted lines) with pointwise \rinline{(1-alpha)*100}\%-confidence intervals (dashed/dash-dotted lines) based on data from \citet{jhu}, shown in black (solid), and \citet{rki}, shown in blue (dotted), respectively; vertical red dashed lines indicate the time period over which countermeasures have been implemented, cf. Table~\ref{npi}.}\label{germanyEst}
+\end{figure}
+
+The estimates based on the data from the \citet{jhu} differ quantitatively but not qualitatively from the ones using the data of the \citep{rki}, see Figure~\ref{germanyEst}.
+
+\begin{figure}[!p]
+%% begin.rcode bundSens
+% bund.sens <- cbind(bund, repronum(
+%     new.cases = bund$new.cases,
+%     profile = sim.infectivity,
+%     delay = report.delay,
+%     conf.level = 1-alpha
+% ))
+% 
+% par(mar=c(4,4,0,4)+0.1)
+% with(bund.sens[bund.sens$date >= mindate & !is.na(bund.sens$repronum),], {
+%     plot(date, repronum, type = "l", log = "y", lwd = 2, xlim=c(mindate, maxdate),
+%         xlab = "date", ylab = "estimated R(t)", axes=F)
+%     box()
+%     axis(1, at=laender$date[format(laender$date, "%w") == 1], label=format(laender$date[format(laender$date, "%w") == 1], "%d/%m/%y"))
+%     axis(2, at=1:9)
+%     axis(2, at=1:9 / 10)
+%     abline(h = 1, col = "red")
+%     abline(v = as.Date(c("2020-03-13", "2020-03-25")), col = "red", lty = 3)
+%     lines(date, ci.lower, lty = 2)
+%     lines(date, ci.upper, lty = 2)
+% })
+% with(bund.est[bund.est$date >= mindate & !is.na(bund.est$repronum),], {
+%     lines(date, repronum, lwd = 2, col = "blue", lty = 3)
+%     lines(date, ci.lower, lty = 4, col = "blue")
+%     lines(date, ci.upper, lty = 4, col = "blue")
+% })
+%% end.rcode
+\caption{Estimated reproduction numbers for Germany over time (solid/dotted lines) with pointwise \rinline{(1-alpha)*100}\%-confidence intervals (dashed/dash-dotted lines) based on data from \citet{rki} using the infectivity profile of the SEIR-model in Section~\ref{ValidSim} (see Figure~\ref{simPlotInfect}), shown in black (solid), and using the infectivity profile modelled in Section~\ref{SpecCOVID} (see Figure~\ref{infProf}), shown in blue (dotted), respectively; vertical red dashed lines indicate the time period over which countermeasures have been implemented, cf. Table~\ref{npi}.}\label{bundSens}
+\end{figure}
+
+To understand the effect the infectivity profile exerts on the estimates, we consider the infectivity profile we computed for the stochastic SEIR-model used for simulations in Section~\ref{ValidSim} (see Figure~\ref{simPlotInfect}), employing it to estimate the reproduction numbers using the data from the \citet{rki} again.
+When comparing the results with the ones obtained using the infectivity profile modelled in Section~\ref{SpecCOVID} (see Figure~\ref{infProf}), one observes that the former profile has a longer tail, so the estimator takes values from further in the past into account, which for increasing case numbers reduces the denominator in Equation~\eqref{estim}, and hence somewhat increases the estimates.
+Once case numbers stabilise, this effect obviously vanishes.
+As with the data source, the influence of the infectivity profile appears to be small enough not to matter qualitatively.
+
+
+\section{Discussion}
+\label{DiscOut}
+
+The results for simulated data in Section~\ref{ValidSim} demonstrate the validity of the estimator, and of the asymptotic confidence intervals we derived.
+This is substantiated further by the fact that the estimated reproduction numbers' decrease for Germany correlate strongly with enforcement of non-pharmaceutical countermeasures there.
+
+Let us stress the advantage of this estimator over approaches which determine growth rates or doubling times by fitting \term{exponential growth models} to numbers of either new cases or total cases in the initial phase of the epidemic where the proportion of susceptibles is close to $100\%$, cf. \citep{Obadia2012}.
+In fact, the latter models are implicitly based on the assumption that conditions do not change such that the epidemic spreads with a constant growth rate, and thus with a constant reproduction number.
+But here we aim to determine a varying reproduction number.
+Fitting exponential growth models to total case numbers therefore is not conducive, even when localising the procedure by considering short time windows.
+Indeed, the case numbers from the past which occurred under different conditions will always affect the estimates.
+This problem is alleviated when exponential growth models are fitted locally to the numbers of new cases.
+Still, one needs to assume that conditions change slowly -- which is debatable for the drastic measures which have been implemented quickly.
+In any case, even if one could observe new infections directly, the resulting estimates would be (additionally) smoothened, as opposed to the unbiased, sharp results obtained for the estimator we consider here (cf. Figure~\ref{simPlotSingle}).
+
+Nonetheless, the estimates have to be cautiously interpreted.
+For one, the calculated confidence intervals quantify only a rather small part of the uncertainty, namely the one which stems from the stochastic nature of the epidemic's evolution over time.
+Other uncertainties may affect the estimates much more, in particular when case numbers are large.
+In the following, we discuss those which we believe to be most important.
+
+The first set of difficulties concerns the \term{quality of the data}.
+\begin{enumerate}[(a)]
+\item Not all infections are reported, for example because cases remain asymptomatic, or because infected persons die without having been tested.
+If the proportion of infections which get reported stays constant over time (or at least varies slowly), both numerator and denominator in Equation~\eqref{estim} are multiplied by the same factor, so they cancel and the estimates are not affected.
+Changes in the reporting or testing methodology, however, will affect the estimates, as they will be indistinguishable from a true increase or decrease in the number of infections.
+This will for example happen if more people are tested due to higher capacities in testing facilities, or if lower case numbers allow more extensive tests of potential contacts, or if deaths are attributed to the disease without testing when such capacities are exhausted.
+Potential remedies include to not only consider reported infections but take fatalities, test rates etc. into account.
+%
+\item The reporting date is not the date of infection: when the patient becomes symptomatic, he has to visit a physician, samples have to be tested, the test results need to be interpreted, and finally reported to the authorities.
+The strength of this effect is visible from the periodic pattern related to the days of the week in Figures~\ref{bund} and~\ref{bundEst}.
+For some of the data provided by the \citet{rki}, both the reporting date, and the day of symptom onset are known, which in principle allows to infer dates of symptom onset for the entire dataset, thus getting rid of the weekday's influence.
+But the difficulty that the estimator is based on knowing the date of infection remains, cf. Section~\ref{ValidSim} with Figure~\ref{simPlotSingleInfectious}.
+To treat this properly, one would need to know the distribution of the incubation times, and compute a deconvolution.
+%
+\item Imported cases, i.e. travellers who became infected abroad and got reported after returning home, should not be counted as secondary cases because the corresponding primary case has not been accounted for. However, the location of infection is often unknown; such cases will then unduly increase the numerator in Equation~\eqref{estim}, and hence also the estimated reproduction number.
+This might explain the surprisingly large estimated values -- larger than 4, cf. Section~\ref{SpecCOVID} --  at the beginning of March in Germany, see Figure~\ref{bundEst}, when many infections were acquired during holidays abroad.
+\end{enumerate}
+
+Other problems originate from the modelling approach.
+\begin{enumerate}[(a)]\setcounter{enumi}{3}
+\item In Equation~\eqref{struct}, a structural assumption was made: the infectivity profile does not change over time.
+If changing conditions affect cases at different infection ages differently, e.g. because the health system is overwhelmed and no longer can provide for high quality isolation of severe cases (with higher infection ages), or because better medical treatment for such cases becomes available, then the change of the transmissibility $\beta$ depends on the infection age.
+As a result, the estimates for the reproduction number will combine the changes for the different infection ages into a certain average.
+%
+\item Similarly, the method does not distinguish individuals in different strata of the population, e.g. age groups or regions.
+So changes which affect certain strata more and others less, e.g. school closures, will again be averaged over the population.
+%
+\item Finally, the infectivity profile requires modelling.
+We stress that this needs to be distinguished from a virological assessment of a case's level of infectiousness, as it rather describes the potential to successfully transmit the virus.
+For example, the probability at a late stage of the infection may be assumed to be very low: such a person is most likely to be well isolated, either at home (where either all other members of the household have already been infected or apparently are immune) or at a hospital (where isolation measures are strict), so even though from a virological point of view the person may be highly infectious, she probably will not cause a secondary infection at that stage.
+From data on chains of infection, it may be possible to directly estimate the infectivity profile from the observed generation times.
+\end{enumerate}
+
+All these issues render comparisons between countries particularly difficult.
+In any case, they sound a note of caution when looking at the proposed estimates.
+Nonetheless, encouraged by the results in Section~\ref{ApplReal}, we believe that qualitatively correct conclusions may be drawn from them, and that they may prove useful to continuously monitor the spread of COVID-19.
+
+
+\paragraph{Acknowledgements.}\addcontentsline{toc}{section}{Acknowledgements}
+
+The authors thank Dr. med. Luise Prüfer-Krämer, Steering Committee Member of the German Society of Tropical Medicine and Global Health and practising physician, for many fruitful discussions and insights into the care of COVID-19 patients.
+
+\appendix
+
+\section{Derivation of confidence intervals}
+\label{ConfInt}
+
+Starting from Equation~\eqref{condE}, the conditional expectation of $\hat R(t)$ given the past is
+\eqn{ \E(\hat R(t) \cond I(t-1), \dots) = \frac{\mathbb E(I(t) \vert I(t-1), \dots)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)} = R(t)\,. }
+Therefore, $\hat R(t)$ is \term{unbiased},
+\eqn{ \E \hat R(t) = R(t)\,, }
+and the \term{conditional variance} of $\hat R(t)$ is given by
+\eqn{ \Var(\hat R(t) \cond I(t-1), \dots) = \frac{R(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}\,.}
+An application of Slutsky's lemma gives an asymptotic $(1-\alpha)$-confidence interval for $R(t)$: if $q$ denotes the $(1-\frac\alpha 2)$-quantile of the standard normal distribution it is given by
+\eqn{ \Biggl[\hat R(t) - q \sqrt{\frac{\hat R(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}}, \hat R(t) + q \sqrt{\frac{\hat R(t)}{\sum_{\tau=1}^\infty w(\tau) I(t-\tau)}} \Biggr]\,. }
+Note that (approximate) coverage is always guaranteed conditionally on the past, and hence also without conditioning.
+
+\section{Derivation of the infectivity profile for the SEIR-model}
+\label{InfProfSEIR}
+
+Both latent period and infectious period are geometrically distributed with parameters $p_I$ and $p_R$, respectively.
+We essentially need to compute the convolution (summing over time $s$ of getting infectious).
+For $\tau > 1$ and assuming $p_I > p_R$ (the other cases are similar), we obtain
+\begin{align}
+w(\tau) &= \sum_{s=1}^{\tau - 1} p_I (1 - p_I)^{s-1} (1-p_R)^{\tau-1-s}
+= p_I (1-p_R)^{\tau-2} \sum_{s=0}^{\tau - 2} \biggl( \frac{1 - p_I}{1-p_R} \biggr)^s
+\notag\\&= p_I (1-p_R)^{\tau-2} \frac{1 - \bigl( \frac{1 - p_I}{1-p_R} \bigr)^{\tau-1}}{ \frac{p_I - p_R}{1 - p_R} }
+= p_I (1-p_R)^{\tau-1} \frac{1 - \bigl( \frac{1 - p_I}{1-p_R} \bigr)^{\tau-1}}{ p_I - p_R }
+\notag\\&= p_I \frac{(1-p_R)^{\tau-1} - (1 - p_I)^{\tau-1}}{ p_I - p_R }\,.
+\end{align}
+
+
+
+\bibliographystyle{dcu}
+\setlength{\bibsep}{3pt}
+\bibliography{../corona.bib}
+
+
+\end{document}

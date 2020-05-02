@@ -1,0 +1,10 @@
+language: r
+sudo: false
+script: make all
+cache: packages
+r_packages:
+  - rmarkdown
+  - lubridate 
+os:
+  - linux
+  - osx

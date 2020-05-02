@@ -1,0 +1,8 @@
+*
+!.gitignore
+!makefile
+!clean.r
+!rki_query.py
+!rki_data
+rki_data/*
+!rki_data/RKI_COVID19_latest.csv

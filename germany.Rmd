@@ -1,0 +1,120 @@
+---
+title: 'Monitoring der Ausbreitung von COVID-19 durch Schätzen der Reproduktionszahl im Verlauf der Zeit'
+output:
+  html_document:
+    theme: lumen
+    self_contained: false
+    lib_dir: html_libraries
+---
+
+Erstellt von
+[Prof. Dr. Thomas Hotz](https://www.tu-ilmenau.de/stochastik/team/thomas-hotz/),
+[Stefan Heyder](https://www.tu-ilmenau.de/stochastik/team/stefan-heyder/),
+[Matthias Glock](https://www.tu-ilmenau.de/stochastik/team/matthias-glock/)
+und [Sebastian Semper](https://www.tu-ilmenau.de/stochastik/team/sebastian-semper/)
+der
+[AG Stochastik](https://www.tu-ilmenau.de/stochastik/), [Technische Universität Ilmenau](https://www.tu-ilmenau.de/)
+<br/>
+in Zusammenarbeit mit
+[Prof. Dr. Alexander Krämer](https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=21463&lang=de)
+und
+[Anne Böhle](mailto:anne.boehle@uni-bielefeld.de)
+der
+[Fakultät für Gesundheitswissenschaften](https://www.uni-bielefeld.de/gesundhw/index.html), [Universität Bielefeld](https://www.uni-bielefeld.de/).
+
+```{r libraries, echo = F, message = F, warning = F, results='hide'}
+library(lubridate, warn.conflicts = F)
+library(plotly, warn.conflicts = F)
+Sys.setlocale('LC_TIME', 'C')
+source("plot.r")
+source("estimator.r")
+```
+
+```{r data, echo = F}
+germany <- read.csv("data/clean/data_ger_bundl.csv")
+ger_tot <- read.csv("data/clean/data_ger_tot.csv")
+```
+
+```{r plots, echo = F, cache = F, message = F}
+
+```
+
+## {.tabset .tabset-fade .tabset-pills}
+
+<!--
+See https://github.com/rstudio/flexdashboard/issues/80#issuecomment-247139450
+on generating tabs in rmarkdown automatically
+-->
+```{r, echo = F, warning = F, message = F}
+
+# add all of Germany to Bundesland data
+ger_tot$reg0.name <- "Deutschland"
+germany <- merge(ger_tot, germany, all=TRUE)
+
+# tabs for Bundeslaender (and all Germany) sorted alphabetically
+regions <- sort(unique(germany$reg0.name))
+regions <- c("Deutschland", regions[!(regions == "Deutschland")])
+
+plots <- lapply(regions, function(country_name) {
+    country <- germany %>%
+        filter(reg0.name == country_name) %>%
+        mutate(date = ymd(date))
+
+    estimates <- cbind(country, repronum(
+            new.cases = country$new.cases,
+            profile = infectivity,
+            window = width,
+            delay = report.delay,
+            conf.level = 1 - alpha,
+            pad.zeros = TRUE
+        ))
+
+    plot_repronum(estimates, country_name, language = "de", unreliable = 2)
+})
+
+out <- lapply(seq_along(plots), function(i) {
+  a1 <- knitr::knit_expand(text = sprintf("### %s\n", regions[i])) # tab header, auto extracts names of `hcs`
+  a2 <- knitr::knit_expand(text = "\n```{r, echo = F, fig.width = 10, warning = FALSE, message = FALSE}") # start r chunk
+  a3 <- knitr::knit_expand(text = sprintf("\nplots[[%d]]", i)) # extract graphs by "writing" out `hcs[[1]]`, `hcs[[2]]` etc. to be rendered later
+  a4 <- knitr::knit_expand(text = "\n```\n") # end r chunk
+
+  paste(a1, a2, a3, a4, collapse = '\n') # collapse together all lines with newline separator
+})
+```
+
+`r paste(knitr::knit(text = paste(out, collapse = '\n')))`
+
+##
+
+Neben den hier dargestellten Ergebnissen für Deutschland und seine Bundesländer finden sich auf den [englisch-sprachigen Seiten](index.html) solche für die [Welt und die 20 am stärksten betroffenen Länder](index.html) sowie für [alle verfügbaren Länder](all.html).
+
+### Anmerkungen
+
+- Geschätzt wird die (Netto-)**Reproduktionszahl**  *R(t)* am Tag *t*, das heißt die durchschnittliche Anzahl von Menschen, die jemand, der am Tag *t* infiziert wurde, unter gleichbleibenden Bedingungen infizieren würde.
+- Der Schätzer wurde [(Fraser 2007)](#ref1) entnommen. Er beruht auf einem Vergleich der Anzahl der Infektionen zum fraglichen Zeitpunkt mit der Anzahl der infektiösen Fälle zu dieser Zeit, gewichtet mit ihrer jeweiligen Infektiosität. Man beachte, dass eine im Verhältnis zu den gemeldeten Fällen konstant bleibende Dunkelziffer die Schätzungen nicht verändert, da sie sich mit demselben Proportionalitätsfaktor sowohl auf die Zahl der Infizierten als auch der Infektiösen auswirken würde.
+- Für den Schätzer wurden mit Hilfe der Delta-Methode (approximative, punktweise) **95%-Konfidenzintervalle** hergeleitet.
+- Allerdings spiegelt die Größe der Konfidenzintervalle nur diejenige statistische Unsicherheit wider, welche durch die zufällige Dynamik der Epidemie entsteht. Da der Schätzer jedoch auf gewissen Annahmen über die Infektiosität des Virus basiert und darüberhinaus die zugrundeliegenden Daten aufgrund von sich ändernden Meldekriterien, der Anzahl durchgeführter Tests etc. nicht zu vernachlässigende Ungenauigkeiten aufweisen, **sollten die Schätzungen vorsichtig interpretiert werden**. Beispielsweise wirken sich bei den hier verwendeten Daten Wochenendeffekte stark auf das Meldedatum aus, was wiederum die Schätzungen beeinflusst. Dennoch glauben wir, dass sich aus den Schätzungen qualitativ richtige Erkenntnisse ableiten lassen.
+- Die Schätzungen werden als schwarze Linien, die zugehörigen Konfidenzintervalle als graue Streifen dargestellt, wobei die Werte gemäß der (**logarithmischen Skala** der) **linken Achse** aufgetragen sind (daher ist 0 auf der Achse nie sichtbar, sondern entspricht dem unendlich fernen unteren Ende der Achse). Konnten Schätzungen wegen mangelhaften Daten nicht berechnet werden, wird durch eine gestrichelte Linie ohne Konfidenzintervalle interpoliert.
+- Der **kritische Wert** für die Reproduktionszahl ist **1**, markiert als rote horizontale Linie. Ein größerer Wert als Eins würde zu einem exponentiellen Anstieg der Anzahl an Infektionen führen, ein kleinerer zu einem Abfallen.
+- Die Analyse basiert auf den **neu gemeldeten Fällen** der Coronavirus-Krankheit 2019 (COVID-19) pro Tag, angezeigt als blaue Säulen entsprechend der (linearen) Skala der **rechten Achse**. Die zu Grunde liegenden [Daten](#ref2) stammen vom [Robert Koch-Institut](https://www.rki.de).
+- Für die geschätzten Reproduktionszahlen (schwarze Linie, linke vertikale Achse) bezieht sich die horizontale Achse auf das zugehörige Infektionsdatum, während sie sich für die neu gemeldeten Fälle (blaue Säulen, rechte vertikale Achse) auf das Meldedatum bezieht. Montage sind durch dünne vertikale Linien gekennzeichnet.
+- Die Grafiken werden täglich aktualisiert (zuletzt: `r format(Sys.time(), '%d.%m.%Y, %H:%M', tz = "Europe/Berlin")`) und zeigen den Datenstand bis gestern.
+- Zu beachten ist weiterhin, dass das Meldedatum der Fälle aufgrund der Inkubationszeit (ca. 5 Tage [(WHO 2020)](#ref3)) und der Zeit für die Durchführung der Tests sowie der Meldung an die Behörden wesentlich später liegt als das tatsächliche Infektionsdatum. Der Einfachheit halber wird hier von einer Verzögerung von 7 Tagen ausgegangen. Daher wird auch die Schätzung der Reproduktionszahl **um eine Woche zeitversetzt** zu den gemeldeten Fällen angezeigt.
+- Aufgrund der Meldekette vom Gesundheitsamt des Landkreises über die zuständige Landesbehörde an das Robert Koch-Institut werden noch Daten nachgetragen - und zwar für die letzten 3 Tage in nicht zu vernachlässigendem Umfang. Deshalb sind die jeweils **letzten 3 Werte noch nicht vollständig** und werden entsprechend blasser dargestellt.
+- In einer Population, in der keine Gegenmaßnahmen unternommen werden, wird die sogenannte **Basisreproduktionszahl** *R<sub>0</sub>* auf einen Wert zwischen 2,4 und 4,1 geschätzt [(Read et al. 2020)](#ref4). Schätzungen mit höheren Werten könnten durch eine beträchtliche Anzahl von von außen **eingeschleppten Fällen** erklärt werden.
+-  **Details** findet man im zugehörigen [Bericht](reports/repronum/repronum.pdf)  [(Hotz et al. 2020)](#ref5); der **Code** ist [hier](https://github.com/Stochastik-TU-Ilmenau/COVID-19/blob/gh-pages/estimator.r) verfügbar.
+
+### Referenzen
+
+<a name="ref1">[1]</a>: Fraser, C. (2007). *Estimating Individual and Household Reproduction Numbers in an Emerging Epidemic.* PLOS ONE 2 (8), [https://doi.org/10.1371/journal.pone.0000758](https://doi.org/10.1371/journal.pone.0000758).
+
+<a name="ref2">[2]</a>: Robert Koch-Institut (RKI), dl-de/by-2-0, [https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0](https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0).
+
+<a name="ref3">[3]</a> WHO (2020). Report of the WHO-China Joint Mission on Coronavirus Disease 2019 (COVID-19), [https://www.who.int/publications-detail/report-of-the-who-china-joint-mission-on-coronavirus-disease-2019-(covid-19)](https://www.who.int/publications-detail/report-of-the-who-china-joint-mission-on-coronavirus-disease-2019-(covid-19)).
+
+<a name="ref4">[4]</a>: Read, J.M., Bridgen, J.R.E., Cummings, D.A.T., Ho, A., Jewell, C.P. (2020). *Novel coronavirus 2019-nCoV: early estimation of epidemiological parameters and epidemic predictions.* MedRxiv, Version 2, 01/28/2020, [https://doi.org/10.1101/2020.01.23.20018549](https://doi.org/10.1101/2020.01.23.20018549).
+
+<a name="ref5">[5]</a>: Hotz, T., Glock, M., Heyder, S., Semper, S.,  Böhle, A., Krämer, A. (2020). *Monitoring the spread of COVID-19 by estimating reproduction numbers over time.* [arXiv:2004.08557](https://arxiv.org/abs/2004.08557), 18/04/2020.
+
+<br/>
+*[Impressum](impressum.html)*
