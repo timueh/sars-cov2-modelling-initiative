@@ -6,23 +6,28 @@ function parse_commandline()
     s = ArgParseSettings()
 
     @add_arg_table! s begin
-        "name"
+        "--name"
             help = "Name of the directory"
             required = true
             arg_type = String
-        "language"
+        "--language"
             help = "programming language"
             arg_type = String
             required = true
-        "url"
+        "--url"
             help = "url of repo"
             required = true
             arg_type = String
-        "contact"
+        "--contact"
             help = "contact information"
             required = true
             arg_type = String
-        "json-file"
+        "--branch"
+            help = "branch of repo"
+            required = false
+            arg_type = String
+            default = "master"
+        "--json-file"
             help = "json file that stores repo information (only change if you know what you're doing)"
             required = false
             arg_type = String
@@ -33,11 +38,7 @@ function parse_commandline()
 end
 
 function main()
-    parsed_args = parse_commandline()
-    println("Parsed args:")
-    for (arg,val) in parsed_args
-        println("$arg  =>  $val")
-    end
+    parsed_args = get_and_show_args()
 
     repo = Dict(json_keys["lang"] => parsed_args["language"],
                 json_keys["url"] => parsed_args["url"],
@@ -48,7 +49,7 @@ function main()
     repos = JSON.parsefile(json_file)
     repos[repo_name] =  repo
 
-    run(`git checkout -b $repo_name`)
+    # run(`git checkout -b $repo_name`)
 
     open(json_file, "w") do io
         JSON.print(io, repos, 4)
@@ -58,8 +59,17 @@ function main()
     pull_subtrees(repos)
     run_all(repos)
     run(`git commit list-of-packages.md -m "added $repo_name to md"`)
-    run(`git checkout master`)
+    # run(`git checkout master`)
     # - `git merge --squash $name-of-repo`
+end
+
+function get_and_show_args()
+    parsed_args = parse_commandline()
+    println("Parsed args:")
+    for (arg,val) in parsed_args
+        println("$arg  =>  $val")
+    end
+    parsed_args
 end
 
 main()
