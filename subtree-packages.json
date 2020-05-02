@@ -9,6 +9,11 @@
         "url": "https://github.com/soenkehohn/Corona",
         "contact": "soenke.hohn@leibniz-zmt.de, soenke.hohn@googlemail.com"
     },
+    "coviz-ponge": {
+        "language": "r",
+        "url": "https://github.com/JohannesPonge/coviz",
+        "contact": "https://github.com/JohannesPonge/coviz"
+    },
     "QEDhamburg": {
         "language": "matlab",
         "url": "https://github.com/QEDHamburg/covid19",
