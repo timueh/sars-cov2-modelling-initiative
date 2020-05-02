@@ -1,6 +1,6 @@
 # Included packages
 
-The following packages---ordered by language---are included in the repository (last updated 2020-04-30).
+The following packages---ordered by language---are included in the repository (last updated 2020-05-02).
 
 ## Julia
 | Package | Contact |
@@ -11,6 +11,11 @@ The following packages---ordered by language---are included in the repository (l
 | Package | Contact |
 | --- | --- |
 | [QEDhamburg](https://github.com/QEDHamburg/covid19) | rene.glawion@uni-hamburg.de |
+
+## R
+| Package | Contact |
+| --- | --- |
+| [coviz-ponge](https://github.com/JohannesPonge/coviz) | https://github.com/JohannesPonge/coviz |
 
 ## Python
 | Package | Contact |
