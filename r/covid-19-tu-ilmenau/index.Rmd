@@ -1,0 +1,106 @@
+---
+title: 'Monitoring the spread of COVID-19 by estimating reproduction numbers over time'
+output:
+  html_document:
+    theme: lumen
+    self_contained: false
+    lib_dir: html_libraries
+---
+
+Created by
+[Prof. Dr. Thomas Hotz](https://www.tu-ilmenau.de/stochastik/team/thomas-hotz/),
+[Stefan Heyder](https://www.tu-ilmenau.de/stochastik/team/stefan-heyder/),
+[Matthias Glock](https://www.tu-ilmenau.de/stochastik/team/matthias-glock/)
+and [Sebastian Semper](https://www.tu-ilmenau.de/stochastik/team/sebastian-semper/)
+of the
+[AG Stochastik](https://www.tu-ilmenau.de/stochastik/), [Technische Universität Ilmenau](https://www.tu-ilmenau.de/)
+<br/>
+in collaboration with
+[Prof. Dr. Alexander Krämer](https://ekvv.uni-bielefeld.de/pers_publ/publ/PersonDetail.jsp?personId=21463&lang=de)
+and
+[Anne Böhle](mailto:anne.boehle@uni-bielefeld.de)
+of the
+[School of Public Health](https://www.uni-bielefeld.de/gesundhw/index.html), [Bielefeld University](https://www.uni-bielefeld.de/).
+
+
+```{r libraries, echo = F, message = F, warning = F, results='hide'}
+library(lubridate, warn.conflicts = F)
+library(plotly, warn.conflicts = F)
+Sys.setlocale('LC_TIME', 'C')
+source("plot.r")
+source("estimator.r")
+
+```
+
+```{r data, echo = F}
+johns_hopkins <- read.csv("data/clean/data_world_jh.csv")
+world_tot <- read.csv("data/clean/data_world_tot.csv")
+```
+
+## {.tabset .tabset-fade .tabset-pills}
+
+<!--
+See https://github.com/rstudio/flexdashboard/issues/80#issuecomment-247139450
+on generating tabs in rmarkdown automatically
+-->
+```{r, echo = F, warning = F, message = F}
+numcountries <- 20
+
+# add world tot. cases to johns-hopkins data
+world_tot$reg0.name <- "World"
+johns_hopkins <- merge(johns_hopkins, world_tot, all=TRUE)
+
+maxday <- max(johns_hopkins$day)
+df <- subset(johns_hopkins, day == maxday, select = c(reg0.name, tot.cases))
+df <- df[rev(order(df$tot.cases)),]
+countries <- unique(df$reg0.name[1:(numcountries + 1)])
+
+plots <- lapply(countries, function(country_name) {
+    country <- johns_hopkins %>%
+        filter(reg0.name == country_name) %>%
+        mutate(date = ymd(date))
+
+    estimates <- cbind(country, repronum(
+            new.cases = country$new.cases,
+            profile = infectivity,
+            window = width,
+            delay = report.delay,
+            conf.level = 1 - alpha,
+            pad.zeros = TRUE
+        ))
+
+    plot_repronum(estimates, country_name, language = "en")
+})
+
+out <- lapply(seq_along(plots), function(i) {
+  # tab header, auto extracts names of `hcs`
+  a1 <- knitr::knit_expand(text = sprintf("### %s\n", countries[i]))
+
+  # start r chunk
+  a2 <- knitr::knit_expand(text = "\n```{r, echo = F, fig.width = 10, warning = FALSE}")
+
+  # extract graphs by "writing" out `hcs[[1]]`,
+  # `hcs[[2]]` etc. to be rendered later
+  a3 <- knitr::knit_expand(text = sprintf("\nplots[[%d]]", i))
+
+  # end r chunk
+  a4 <- knitr::knit_expand(text = "\n```\n")
+
+  # collapse together all lines with newline separator
+  paste(a1, a2, a3, a4, collapse = '\n')
+})
+
+```
+
+`r paste(knitr::knit(text = paste(out, collapse = '\n')))`
+
+##
+
+We show results for the world and for the `r numcountries` most affected countries  (by total number of infections). Results for all available countries can be found [here](all.html). Further results for Germany and its federal states (Bundesländer) based on official data are available [here](germany.html) (in German).
+
+```{r echo=FALSE, results="asis"}
+cat(paste(
+    gsub("!NOW!", format(Sys.time(), '%d/%m/%y %H:%M', tz = "GMT"),
+        readLines("notes.md")),
+"\n"), sep = "\n")
+```
