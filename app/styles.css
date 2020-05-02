@@ -1,0 +1,57 @@
+/* adapted from https://github.com/eparker12/nCoV_tracker/blob/master/styles.css */
+
+div.outer {
+  position: fixed;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+div.about {
+  width: 600px;
+}
+
+div.about table {
+	width: 600px;
+}
+
+
+div.about td {
+	padding:5px;
+	border: 1px solid #DDDDDD;
+}
+div.about th {
+	padding:0px 5px;
+}
+
+/* Customize fonts */
+body, label, input, button, select { 
+  font-family: 'Helvetica Neue', Helvetica;
+  font-weight: 200;
+}
+h1, h2, h3, h4 { font-weight: 400; }
+
+#reported_controls, #projection_controls {
+  /* Appearance */
+  background-color: white;
+  padding: 0 10px 10px 10px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.65;
+  zoom: 0.9;
+  transition: opacity 500ms 1s;
+}
+
+#projection_controls h5 {
+	padding:0px;
+	margin: 0px;
+}
+
+#controls:hover {
+  /* Fade in while hovering */
+  opacity: 0.75;
+  transition-delay: 0;
+}
