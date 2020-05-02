@@ -15,7 +15,7 @@ The following packages---ordered by language---are included in the repository (l
 ## R
 | Package | Contact |
 | --- | --- |
-| [coviz-ponge](https://github.com/JohannesPonge/coviz) | https://github.com/JohannesPonge/coviz |
+| [coviz-ponge](https://github.com/JohannesPonge/coviz) | johannes.ponge@uni-muenster.de |
 
 ## Python
 | Package | Contact |
