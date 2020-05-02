@@ -1,38 +1,44 @@
 {
     "Covid19-germany-luethen": {
+        "branch": "master",
         "language": "python",
         "url": "https://github.com/ulilueth/covid19-germany",
-        "contact": "caes@gmx.de",
-        "branch": "master"
+        "contact": "caes@gmx.de"
     },
     "Corona-Hohn": {
+        "branch": "master",
         "language": "python",
         "url": "https://github.com/soenkehohn/Corona",
-        "contact": "soenke.hohn@leibniz-zmt.de, soenke.hohn@googlemail.com",
-        "branch": "master"
+        "contact": "soenke.hohn@leibniz-zmt.de, soenke.hohn@googlemail.com"
     },
     "coviz-ponge": {
+        "branch": "master",
         "language": "r",
         "url": "https://github.com/JohannesPonge/coviz",
-        "contact": "johannes.ponge@uni-muenster.de",
-        "branch": "master"
+        "contact": "johannes.ponge@uni-muenster.de"
+    },
+    "covid-19-tu-ilmenau": {
+        "branch": "gh-pages",
+        "language": "r",
+        "url": "https://github.com/Stochastik-TU-Ilmenau/COVID-19",
+        "contact": "thomas.hotz@tu-ilmenau.de"
     },
     "QEDhamburg": {
+        "branch": "master",
         "language": "matlab",
         "url": "https://github.com/QEDHamburg/covid19",
-        "contact": "rene.glawion@uni-hamburg.de",
-        "branch": "master"
+        "contact": "rene.glawion@uni-hamburg.de"
     },
     "SEIR-with-uncertainties": {
+        "branch": "master",
         "language": "julia",
         "url": "https://github.com/timueh/PandemicModeling",
-        "contact": "tillmann.muehlpfordt@kit.edu",
-        "branch": "master"
+        "contact": "tillmann.muehlpfordt@kit.edu"
     },
     "MiTepid_sim": {
+        "branch": "master",
         "language": "python",
         "url": "https://github.com/vahid-sb/MiTepid_sim.git",
-        "contact": "vahid.bokharaie@tuebingen.mpg.de",
-        "branch": "master"
+        "contact": "vahid.bokharaie@tuebingen.mpg.de"
     }
 }
