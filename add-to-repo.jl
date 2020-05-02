@@ -42,7 +42,8 @@ function main()
 
     repo = Dict(json_keys["lang"] => parsed_args["language"],
                 json_keys["url"] => parsed_args["url"],
-                json_keys["contact"] => parsed_args["contact"])
+                json_keys["contact"] => parsed_args["contact"],
+                json_keys["branch"] => parsed_args["branch"])
 
     #TODO: check uniqueness of passed arguments
     repo_name, json_file = parsed_args["name"], parsed_args["json-file"]

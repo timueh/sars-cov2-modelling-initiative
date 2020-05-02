@@ -3,17 +3,18 @@ using JSON, Dates
 json_keys = Dict("lang" => "language",
                  "url" => "url",
                  "contact" => "contact",
-                 "name" => "name")
+                 "name" => "name",
+                 "branch" => "branch")
 
 
 function pull_subtrees(repos::Dict)
     for (name, data) in repos
-        dir, url = data["language"] * "/" * name, data["url"]
+        dir, url, branch = data[json_keys["lang"]] * "/" * name, data[json_keys["url"]], data[json_keys["branch"]]
         cmd, msg = 
         if isdir(dir)
-            `git subtree pull --prefix=$dir $url master --squash`, "Pulling $dir\n"
+            `git subtree pull --prefix=$dir $url $branch --squash`, "Pulling $dir\n"
         else
-            `git subtree add --prefix=$dir $url master --squash`, "Adding $dir\n"
+            `git subtree add --prefix=$dir $url $branch --squash`, "Adding $dir\n"
         end
         printstyled(msg, color=:green)
         result = run(cmd)
