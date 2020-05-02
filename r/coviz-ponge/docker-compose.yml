@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+
+ coviz:
+  build: .
+  volumes:
+   - ./app:/srv/shiny-server/
+   - ./logs:/var/log/shiny-server/
+  ports:
+   - "80:80"

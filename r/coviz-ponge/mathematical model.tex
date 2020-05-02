@@ -1,0 +1,71 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+\newcolumntype{C}[1]{>{\Centering}m{#1}}
+\renewcommand\tabularxcolumn[1]{C{#1}}
+
+\bibliographystyle{plainnat}
+\setcitestyle{authoryear,open={(},close={)}}
+\usepackage{lineno}
+\journal{Epidemics}
+
+\begin{document}
+\renewcommand{\arraystretch}{1,5}
+\section{Compartment in districts}
+\noindent\begin{tabular}[t]{@{}p{9cm}p{7cm}}
+Population in district $i$ at time $t$: &$N_i(t)$ \\
+Currently susceptible in district $i$ at time $t$: &$S_i(t)$ \\
+Currently infected in district $i$ at time $t$: &$I_i(t)$ \\
+Currently recovered in district $i$ at time $t$:
+&$R_i(t)$
+
+\end{tabular}
+
+\section{Movement between districts}
+\noindent\begin{tabular}[t]{@{}p{9cm}p{7cm}}
+
+Districts: &$V=\{v_i\}$ \\
+Paths between districts: &$E=\{e_{ij}:v_i,v_j\in V \}$ \\
+Number travelers between districts: &$W=\{w_{ij}:v_i,v_j\in V\}$ \\
+Probability of person in $v_i$ to travel to $v_j$: &$\frac{w_{ij}}{N_i(t)}$ \\
+Number of persons traveling from $v_i$ to $v_j$ at timestep $t$:
+\end{tabular}
+
+
+\begin{equation*}
+X_{ij}\left(t\right)\sim Multinomial\left(w_{ij},\ \frac{S_i\left(t\right)}{N_i\left(t\right)},\frac{I_i\left(t\right)}{N_i\left(t\right)},\frac{R_i\left(t\right)}{N_i\left(t\right)}\right)
+\end{equation*}
+
+\section{Infection dynamics}
+\noindent\begin{tabular}[t]{@{}p{9cm}p{7cm}}
+
+Infection rate: &$\beta \geq 0$ \\
+Recovery transition rate: &$\mu \geq 0$ \\
+Fraction of day spent in district: &$0\le \Delta_t\le 1$ \\
+New infected people between $t$ and $t+\Delta_t$:  &$I_{i,new}(t + \Delta_t) \sim Binomial\left(S_i\left(t\right),\frac{\beta\cdot\Delta_t\cdot I_i\left(t\right)}{N_i\left(t\right)}\right)$ \\
+New recovered people between $t$ and $t+\Delta_t$: & $ R_{i,new}(t + \Delta_t) \sim Binomial\left(I_i\left(t\right),\mu\cdot\Delta_t\right)$\\
+
+Number of susceptible people:
+&$S_i\left(t+\Delta_t\right)=S_i\left(t\right)-I_{i,new}(t)$ \\
+
+Number of infected people:
+ &$I_i\left(t+\Delta_t\right)=I_i\left(t\right)+I_{i,new}(t)- R_{i,new}(t)$ \\
+Number of recovered people:
+
+&$R_i\left(t+\Delta_t\right)=R_i\left(t\right)+R_{i,new}(t)$
+\end{tabular}
+
+\section{Infection statistics}
+\noindent\begin{tabular}[t]{@{}p{9cm}p{7cm}}
+
+Number of susceptible people at time $t$: & $\sum_i S_i(t)$ \\
+Number of infected people at time $t$: & $\sum_i I_i(t)$ \\
+Number of recovered people at time $t$: & $\sum_i R_i(t)$ \\
+Number of at time $t$ new infected people in district $i$: &$I_i(t) - I_i(t-1)$ \\
+Number of at time $t$ new recovered people in district $i$: &$R_i(t) - R_i(t-1)$
+\end{tabular}
+\end{document}
