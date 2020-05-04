@@ -11,7 +11,7 @@ from data import neu, country, NN
 import datetime
 
   # mission control
-Tmax=35; DZ=4; R00=0.52; gamma00=1/3.6; alpha00=1/4; beta00=R00*gamma00
+Tmax=42; DZ=10; R00=0.581; gamma00=1/4.073; alpha00=1/4.5
 
   # estimated daily new infections   
 neu_prognos=[]; neu_geomean=[]
@@ -86,7 +86,7 @@ def diagram(sim):
     import matplotlib.pyplot as plt
     global I_emp, neu, sum; neu_prognos=[]
     plt.style.use("classic")
-    figure,ax = plt.subplots(facecolor="#ffffff", figsize=(15,10))
+    figure,ax = plt.subplots(facecolor="#ffffff", figsize=(16,12))
     ax.set_xlim(0, Tmax); 
     ax.grid(linestyle="-", linewidth=0.5, color="#888888")
     ax.grid(axis="y", which="major", linestyle="-", linewidth=0.5, color="#888888") 
@@ -121,7 +121,7 @@ def diagram(sim):
     for k in range(1, len(I_emp)): 
       Rt_emp.append((I_emp[k]/I_emp[k-1]))
     Rt_akt=Rt[10*len(I_emp)]
-    iax=figure.add_axes([.68, .4, .21, .14], facecolor="w", xlim=[0,Tmax])
+    iax=figure.add_axes([.68, .35, .21, .14], facecolor="w", xlim=[0,Tmax])
     iax.plot(t[0:len(Rt)],[1 for _ in Rt], color="#000000", linewidth=0.5)   
     iax.plot(t[0:len(Rt)],Rt, color="#006070", linewidth=0.5)   
     iax.plot(range(0, len(Rt_emp)),Rt_emp[-vonhinten:], color="#006070", linewidth=2)
@@ -153,15 +153,16 @@ while switches<3:
   if rms1>rms0:   # getting worse
     faktor=1/faktor    
     switches+=1"""
-faktor=1.002; switches=0  ### optimize gamma00
+"""faktor=1.002; switches=0  ### optimize gamma00
 while switches<3:
   rms0=getRMS(sim1)
   gamma00=gamma00*faktor
   rms1=getRMS(sim1)
   if rms1>rms0:   # getting worse
     faktor=1/faktor
-    switches+=1
+    switches+=1"""
  
   ## so far, so good, so plot
+beta00=R00*gamma00 # doppelte Buchfuehrung fuer neu_prognos  
 rms1=getRMS(sim1)
 diagram(sim1)
