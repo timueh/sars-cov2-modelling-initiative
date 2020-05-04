@@ -26,4 +26,6 @@ jobs:
         git config --local user.name "Tillmann Mühlpfordt @ GH Actions"
 
     - name: Call the julia script
-      run: julia -e 'using Pkg; Pkg.add("JSON"); repos = include("auxfuns.jl"); pull_subtrees(repos)'
+      run: |
+        julia -e 'using Pkg; Pkg.add("JSON"); repos = include("auxfuns.jl"); pull_subtrees(repos)'
+        git push
