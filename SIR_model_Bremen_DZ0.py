@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #SIR_model.py for Germany
 
 import numpy as np
@@ -11,6 +12,9 @@ import matplotlib.pyplot as plt
 #from scipy.stats import norm
 #import matplotlib.mlab as mlab
 #import scipy.special as sp
+import datetime
+import matplotlib.dates as mdates
+
 
 # data:
 data_file="./Corona_infections_Bremen.txt"
@@ -56,8 +60,13 @@ rho= 0.03 # recovery rate for infected individuals
 sigma= 0.0 # rate of recovered individuals that become susceptible for reinfection
 
 # initialization
-tmax=50 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
+tmax=61 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
 dt=1.0
+
+base = datetime.datetime(2020, 3, 11)
+timeax = np.array([base + datetime.timedelta(hours=(24 * i))
+                  for i in range(tmax)])
+
 
 S=np.zeros(tmax)
 I=np.zeros(tmax)
@@ -77,14 +86,12 @@ for i in range(tmax-1):
     if i>15:
         c=2.0
         if i>20:
-            rho=0.05
-            if i>24:
-                delta= 0.005 # this increase in mortality is due to an incident of clustered infections in a special-care home for elderly people
-                if i>35:
-                    c=2.5 # this was only an artefact from Easter?
-                    #rho=0.03
-                    #if i>50: #for future scenarios
-                        #c=2.2
+            rho=0.04
+            if i>30:
+                c=1.8 # this was only an artefact from Easter?
+                #rho=0.03
+                if i>40: #for future scenarios
+                    rho=0.03
     
     # susceptible fraction of population
     dSdt=theta*S[i]+b*S[i]-d*S[i] - a*c*S[i]*I[i]/P + sigma*R[i]
@@ -118,7 +125,7 @@ plt.plot(Bdead,'bo',label='deaths')
 plt.plot(Brec,'go',label='recovered')
 plt.xlabel('days after 11th of March')
 plt.ylabel('number of people')
-plt.title('Covid Model for Bremen plus surrounding (assuming 0\% unreported cases)')
+plt.title('Covid Model for Bremen plus surrounding (assuming 0% unreported cases)')
 plt.legend(loc=2)
 
 
@@ -157,6 +164,33 @@ plt.title('Covid Model for Bremen (assuming 0% unreported cases)')
 
 print 'Verdoppelungszeit=',DDt[7]
 print 'Verdoppelungszeit=',DDt[tmax-2]
+
+
+#trange=np.arange(0,tmax,1)
+trange=timeax
+years=mdates.YearLocator()
+months=mdates.MonthLocator()
+years_fmt=mdates.DateFormatter('%Y')
+#Datum=dts.date(2020,3,18)
+
+#print Datum
+
+
+plt.figure(5)
+#fig, ax = plt.subplots(constrained_layout=True)
+#locator = mdates.AutoDateLocator()
+#formatter = mdates.ConciseDateFormatter(locator)
+#ax.xaxis.set_major_locator(locator)
+#ax.xaxis.set_major_formatter(formatter)
+plt.plot(trange, D+I+R, lw=3, color='green', label='Genesene')
+plt.plot(trange,D+I, lw=3, color='red', label='Aktuell Erkrankte')
+plt.plot(trange, D, lw=3, color='black', label='Verstorbene')
+plt.fill_between(trange, D, D+I, color='red')
+plt.fill_between(trange, D+I, D+I+R, color='green')
+plt.fill_between(trange, 0, D, color='black')
+plt.grid(True)
+plt.legend(loc=2)
+
 
 
 #lenBinf=len(Binf)
