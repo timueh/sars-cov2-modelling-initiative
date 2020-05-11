@@ -26,12 +26,12 @@ d= 0.010615 * 1.0/360.0 # death rate of healthy individuals (per year)
 
 # parameters: unconstrained
 # infection dynamics:
-a= 0.03 # probability that the disease is transmitted upon contact
+a= 0.02999 # probability that the disease is transmitted upon contact
 c= 7.60 # contact rate per susceptible individual
 
 # recovery and mortality
 #delta= 0.033 # death rate of infected individuals # based on Chinese data
-delta= 0.0021 # death rate of infected individuals # based on GERMAN data
+delta= 0.0019 # death rate of infected individuals # based on GERMAN data
 
 
 #rho= 0.08 # recovery rate for infected individuals (an earlier guess but completely unconstrained)
@@ -41,7 +41,7 @@ rho= 0.03 # recovery rate for infected individuals (constrained by Chinese and B
 sigma= 0.0 # rate of recovered individuals that become susceptible for reinfection
 
 # initialization
-tmax=95
+tmax=100
 dt=1.0
 
 S=np.zeros(tmax)
@@ -68,6 +68,8 @@ for i in range(tmax-1):
                 c=1.10
                 if i>82:
                     c=0.7
+                    if i>92:
+                        c=0.5
             
     # susceptible fraction of population
     #dSdt=theta*S[i]+b*S[i]-d*S[i] - a*c*S[i]*I[i]/P + sigma*R[i]
@@ -99,7 +101,7 @@ plt.plot(Ginf,'ro',label='infections cumulative')
 plt.plot(Gdead,'bo',label='deaths')
 plt.xlabel('days after 28th of January')
 plt.ylabel('number of people')
-plt.title('Covid Model for Germany (assuming 0\% unreported cases)')
+plt.title('Covid Model for Germany (assuming 0% unreported cases)')
 plt.legend(loc=2)
 
 

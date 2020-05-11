@@ -167,3 +167,10 @@ German population as well as for the federal state of Bremen.
   <img src="./figures/R0_Bremen_29042020.png" width="500">
 </p>
 
+# Update 10.05.2020
+The number of infections is still on the rise. Latest larger incident was another home for elderly people.
+
+<p align="center">
+  <img src="./figures/Bremen_10052020_SZ.png" width="500">
+</p>
+
