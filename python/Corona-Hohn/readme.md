@@ -174,3 +174,18 @@ The number of infections is still on the rise. Latest larger incident was anothe
   <img src="./figures/Bremen_10052020_SZ.png" width="500">
 </p>
 
+
+# Update 15.05.2020
+The model for Bremen still predicts an increase of active infections, which is confirmed by the data.
+
+
+<p align="center">
+  <img src="./figures/Bremen_15052020.png" width="500">
+</p>
+
+
+<p align="center">
+  <img src="./figures/Bremen_15052020_SZ.png" width="500">
+</p>
+
+

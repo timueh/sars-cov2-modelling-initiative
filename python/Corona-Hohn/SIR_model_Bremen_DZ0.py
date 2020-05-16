@@ -60,7 +60,7 @@ rho= 0.03 # recovery rate for infected individuals
 sigma= 0.0 # rate of recovered individuals that become susceptible for reinfection
 
 # initialization
-tmax=61 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
+tmax=66 # change duration of simulation to switch between parameter adjustment on the timescale of available data and future predictions for an entire year
 dt=1.0
 
 base = datetime.datetime(2020, 3, 11)
@@ -88,7 +88,7 @@ for i in range(tmax-1):
         if i>20:
             rho=0.04
             if i>30:
-                c=1.8 # this was only an artefact from Easter?
+                c=1.75 # this was only an artefact from Easter?
                 #rho=0.03
                 if i>40: #for future scenarios
                     rho=0.03
@@ -190,6 +190,8 @@ plt.fill_between(trange, D+I, D+I+R, color='green')
 plt.fill_between(trange, 0, D, color='black')
 plt.grid(True)
 plt.legend(loc=2)
+plt.title('Covid Model for Bremen plus surrounding (assuming 0% unreported cases)')
+
 
 
 
