@@ -17,7 +17,7 @@ def str_policy_info():
         info on basic policies.
 
     """
-    # text should be manually updated based on policies defined in get_Bopt
+    # text should be manually updated based on policies defined in get_B_policy
     str_out = """
     ***************************************************************************************
     HOW EACH POLICY IS DEFINED?
@@ -103,7 +103,7 @@ def str_policy_info():
     """
     return str_out
 
-def get_Bopt(file_data_opt, country='Germany', policy='Uncontained', ):
+def get_B_policy(file_data_opt=None, country='Germany', policy='Uncontained', B = None, ):
     """
     Return the contact rates for the specified model (SIS/SIR), country, pre-defined policy.
 
@@ -127,9 +127,11 @@ def get_Bopt(file_data_opt, country='Germany', policy='Uncontained', ):
     # load original (uncontained) Bopt obtained from optimisation performed in matlab
     # variable names in saved files is 'B_opt_' + country, example: B_opt_Germany
     from mitepid.utils import load_mat, scale_B_opt
-    varname = 'B_opt_noramlised'
-    B_opt_normalised = load_mat(file_data_opt, varname)
-    B_opt_orig = Bopt_normalised_2_country(B_opt_normalised, get_pop_distr(country))
+    if not file_data_opt is None:
+        varname = 'B_opt_noramlised'
+        print(file_data_opt)
+        B_opt_normalised = load_mat(file_data_opt, varname)
+        B = Bopt_normalised_2_country(B_opt_normalised, get_pop_distr(country))
     # these policies are defined intuitively,
     # all suggestions to make them more accurate are welcome
     #------------------------
@@ -199,11 +201,11 @@ def get_Bopt(file_data_opt, country='Germany', policy='Uncontained', ):
     elif not policy == 'Uncontained':
         raise('Policy was not recognized.')
     if policy == 'Uncontained':
-        B_opt = B_opt_orig
+        B_policy = B
     else:
-        B_opt = scale_B_opt(B_opt_orig, list_scales)
+        B_policy = scale_B_opt(B, list_scales)
 
-    return B_opt
+    return B_policy
 
 def get_pop_distr(country):
     """
