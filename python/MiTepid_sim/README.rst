@@ -8,9 +8,15 @@ MiTepid_sim
    :target: https://www.gnu.org/licenses/gpl-3.0
 
 
-MiTepid_sim: A repository to simulate the spread of COVID19. 
+MiTepid_sim: A repository to simulate the spread of COVID-19 or any other disease. Made in Tübingen. 
 
-This code simulates a set of nonlinear ODEs which can simulate the spread of a virus in any population with a known age structure, using both SIR and SIS models. The parameters of this model are estimated based on the available data on the spread of COVID-19. The details of that method, which relies on an optimisation scheme, are explained in `this manuscript <http://people.tuebingen.mpg.de/vbokharaie/pdf_files/Quantifying_COVID19_Containment_Policies.pdf>`_. The optimisation itself is done using the GLobal Optimisation Toolbox in Matlab. But the optimised values of the model parameters are uploaded with this code. 
+This code simulates a set of nonlinear ODEs which can simulate the spread of a virus in any stratified population, using different compartmental models. So far, SIS, SIR and SEIR models are defined in the code, but the user can easily add any other model. 
+
+The `epid_sim` library also allows the user to define containment policies in different instances of time, and then simulate the trajectory of the population of each compartment in each group. And then plot them. 
+
+It can be used to simulate any of the defined compartmental models with user-specified parameters. But the library comes with a set of contact rates which are calculated from the available data on the spread of COVID-19. The details of how these contact rates are estimated are explained in `this manuscript <http://people.tuebingen.mpg.de/vbokharaie/pdf_files/Quantifying_COVID19_Containment_Policies.pdf>`_. 
+
+The `epid_sim` library is accompanied by a script called `script_main.py` which includes examples of how to use the library. A minimal sample code is given below. 
 
 Updates on the model and how it can be used to predict the spread of COVID-19 can be found in:
 https://people.tuebingen.mpg.de/vbokharaie/ 
@@ -27,82 +33,139 @@ Or you can install it from repo if you want to have the latest (untested) update
 
 Basic Usage
 -----------
-Code should work well under Python 3.x. There is a script coming with the code called ``script_main.py`` which can be used as a template for how to run the code and demonstrates its capabilities. 
+The code should work well under Python 3.x. There is a script coming with the code called ``script_main.py`` which can be used as an example on how to run the code. 
 
-The following code snippet simulates the spread of COVID-19 in Germany. It assumed initially, 1 in 10,000 in all age groups in Germany are infective. The disease spread uncontained for 60 days and then various containment policies are imposed. The resulting plots for each case saved under ``sample_outputs`` subfolder in the current working directory. 
+The following code snippet simulates the spread of COVID-19 in Germany. It assumed initially, 1 in 100,000 in all age groups in Germany are infective. Two scenarios are studied. One is an uncontained case, which is then used as a reference scenario for the next case study. In the second one, it is assumed COVID-19 spreads uncontained for 60 days, then the country goes under lockdown for 60 days, and then switches between uncontained and lockdown every month. The resulting plots for each case saved under ``sample_outputs`` subfolder in the current working directory. 
 
-To see a list of defined policies and countries, look into ``policy.py`` module. To add a country, you should simply add its age distribution in age groups 0-10, 10-20, 20-30, ..., 70-80, and 80+. And to add a new policy, you just need to define coefficients for each of the age-groups, in [0,1] range, which shows how the policy would affect the contacts of that age-group. 
+To see a list of defined policies and countries, look into ``policy.py`` module. Or you can run `mitepid.str_policy_info()`.
+
+The optimized contact rates are calculated for nine age groups 0-10, 10-20, 20-30, ..., 70-80, and 80+. The advantage of this approach is that we can use the optimized contact rates in any population with a known age-structure. Hence, in order to simulate the model for any country, its age distribution in the above-mentioned age-groups should be defined in the code, more specifically in mit_epid.get_pop_distr() function. A few are already defined. 
 
  .. code-block:: bash
 
-    from mitepid.func_main import main
-
-    from pathlib import Path
-    subfolder = Path('sample_outputs')
-    dir_save_plots_main = Path(Path.cwd(), subfolder)
+    #%% general variables
     country = 'Germany'
     t_end = 541
-    list_t_switch = [0, 60]
-    policy_list = ['Uncontained',
-                   'Schools_closed',
-                   'Elderly_self_isolate',
-                   'Kids_Elderly_self_isolate',
-                   'Schools_Offices_closed',
-                   'Adults_Elderly_Self_isolate',
-                   'Social_Distancing',
-                   'Lockdown',
-                   ]
+    x00 = 1e-5
+    x0_vec=[x00, x00, x00, x00, x00, x00, x00, x00, x00,]
 
-    for policy in policy_list:
-        all_policies = ['Uncontained',]
-        all_policies.append(policy)
-        policy_definition = dict(zip(list_t_switch, all_policies))
-        x00 = 1e-4  # initial condition
-        x0_vec=[x00, x00, x00, x00, x00, x00, x00, x00, x00,]
-        policy_name = 'Uncontained_then_' + policy
-        print('*********************************************')
-        print(policy_name)
-        dict_current = main(country, policy_name, policy_definition,
-                            dir_save_plots_main, t_end=t_end, x0_vec=x0_vec)
 
-Usage for long-term plans
--------------------------
-You can also use the code to plan for long-term policies. Something that seems to be more relevant for all countries in the world. We can impose a total lockdown for a limited period of time. But COVID-19 is here to stay until a vaccine is available. So, we should try smarter solutions. The below-mentioned code snippet shows what happens if we switch between uncontained, total lock-down and another policy which will enforce the basic reproduction number to be 1.0. More details can be found in `this manuscript <http://people.tuebingen.mpg.de/vbokharaie/pdf_files/Quantifying_COVID19_Containment_Policies.pdf>`_. 
+    dir_source_mat = Path(Path(__file__).resolve().parent)
+    file_data_opt_SIR = Path(dir_source_mat, 'Optimised_B', 'SIR_B_opt_normalised.mat')
+    dir_save_plots_main = Path(Path(__file__).resolve().parent, 'sample_output')
 
-For a list of defined policies or how to define new ones, check the ``policies.py`` module. 
+    # loading optimised contact rates
+    file_data_opt_SIS = Path(dir_source_mat, 'Optimised_B', 'SIS_B_opt_normalised.mat')
+    file_data_opt_SIR = Path(dir_source_mat, 'Optimised_B', 'SIR_B_opt_normalised.mat')
+    B_opt_SIS = get_B_policy(file_data_opt_SIS, country, 'Uncontained', )
+    B_opt_SIR = get_B_policy(file_data_opt_SIR, country, 'Uncontained', )
 
- .. code-block:: bash
-
-    #%% Switching between Uncontained, policy that enforces R0 = 1.0 and total Lockdown
-    from mitepid.func_main import main
-
-    from pathlib import Path
-    subfolder = Path('sample_outputs')
-    dir_save_plots_main = Path(Path.cwd(), subfolder)
+    # age groups, used as legends in plots
+    age_groups = ['[0-10]',  '[10-20]', '[20-30]', '[30-40]',
+                  '[40-50]', '[50-60]', '[60-70]', '[70-80]', '80+',]
+    Ng = len(age_groups)
     
-    country = 'Germany'
-    t_end = 541
-    list_t_switch = [0, 90, 120, 150, 180, 210, 240, 270, 300, 330,]
-    all_policies = ['Uncontained',
-                    'Lockdown',
-                    'R0_is_1',
-                    'Uncontained',
-                    'Lockdown',
-                    'R0_is_1',
-                    'Uncontained',
-                    'Lockdown',
-                    'R0_is_1',
-                    'Uncontained',
-                     ]
+    # recovery rate (if on average, an individual is infectious for 20 days, then alpha = 1/20 = 0.05)
+    alpha = load_mat(file_data_opt_SIR, 'alpha')
+    alpha_vec = np.ones((Ng, 1)) * alpha
+    # inhibition rate (if on average, an individual is in Latent (E) compartment for 2 days, then alpha = 1/2 = 0.5)
+    # used in SEIR and not SIR/SIS models
+    Gamma = np.zeros((Ng,Ng))
+    np.fill_diagonal(Gamma, alpha_vec)
+    #
+    Sigma = Gamma *10
 
-    policy_definition = dict(zip(list_t_switch, all_policies))
-    # Starting with 1 in 10,000 of population being infected in all age-groups. 
-    # Change x0_vec for any initial conditions you like. 
-    x00 = 1e-4  
-    x0_vec=[x00, x00, x00, x00, x00, x00, x00, x00, x00,] 
+    
+    model_type = 'SIR'
+    #%% reference policy: uncontained
+    # the uncontained policy is used as the reference model for all epid_sim object defined later on. 
+    # that means in the plots of epid_obj, uncontained policy solution is also plotted as a reference. 
+    policy_name = 'Uncontained'
+    list_t_switch = [0,]
+    all_containment_list = ['Uncontained',]
+    ref_obj = epid_sim(model_type=model_type,
+                        B=B_opt_SIR,
+                        Gamma=Gamma,
+                        Sigma=Sigma,
+                        dir_save_plots_main=dir_save_plots_main,
+                        country='Germany',
+                        policy_list=all_containment_list,
+                        policy_switch_times=list_t_switch,
+                        x0=x0_vec,
+                        t_end=t_end,
+                        str_policy=policy_name,
+                        group_labels=age_groups,)
+    ref_obj.plot_agg()
+    ref_obj.plot_strat()
+    ref_obj.plot_strat_multiax()
+    
+    #%% Uncontained_then_switching_R0
+    list_t_switch = [0, 60, 120, 150, 180, 210, 240, 270, 300, 330,]
+    all_containment_list = ['Uncontained',
+                            'Lockdown',
+                            'R0_is_1',
+                            'Uncontained',
+                            'Lockdown',
+                            'R0_is_1',
+                            'Uncontained',
+                            'Lockdown',
+                            'R0_is_1',
+                            'Uncontained',
+                             ]
     policy_name = 'Uncontained_then_switching_Lockdown_R0'
-    dict_current = main(country, policy_name, policy_definition,
-                            dir_save_plots_main, t_end=t_end, x0_vec=x0_vec)
+    
+    epid_obj = epid_sim(model_type=model_type,
+                        B=B_opt_SIR,
+                        Gamma=Gamma,
+                        Sigma=Sigma,
+                        dir_save_plots_main=dir_save_plots_main,
+                        country=country,
+                        policy_list=all_containment_list,
+                        policy_switch_times=list_t_switch,
+                        x0=x0_vec,
+                        t_end=t_end,
+                        str_policy=policy_name,
+                        group_labels=age_groups,
+                        ref_class=ref_obj)
+
+    epid_obj.plot_agg()
+    epid_obj.plot_strat()
+    epid_obj.plot_strat_multiax()
+    #%% Uncontained_then_switching_Lockdown
+    # this policy inluceds siwtching etween uncontained and lockdown scenarios. 
+    
+    list_t_switch = [0, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, ]
+    all_containment_list  = ['Uncontained',
+                            'Lockdown',
+                            'Uncontained',
+                            'Lockdown',
+                            'Uncontained',
+                            'Lockdown',
+                            'Uncontained',
+                            'Lockdown',
+                            'Uncontained',
+                            'Lockdown',
+                            'Uncontained',
+                           ]
+
+    policy_name = 'Uncontained_then_switching_Lockdown'
+    epid_obj = epid_sim(model_type=model_type,
+                        B=B_opt_SIR,
+                        Gamma=Gamma,
+                        Sigma=Sigma,
+                        dir_save_plots_main=dir_save_plots_main,
+                        country=country,
+                        policy_list=all_containment_list,
+                        policy_switch_times=list_t_switch,
+                        x0=x0_vec,
+                        t_end=t_end,
+                        str_policy=policy_name,
+                        group_labels=age_groups,
+                        ref_class=ref_obj)
+    epid_obj.plot_agg()
+    epid_obj.plot_strat()
+    epid_obj.plot_strat_multiax()
+    
 
 Requirements
 ^^^^^^^^^^^^
@@ -112,6 +175,7 @@ Requirements
     numpy
     scipy
     matplotlib
+    pathlib
 
 
 Compatibility

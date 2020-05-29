@@ -26,7 +26,9 @@ def load_mat(filename, var_name=None):
 
     """
     from scipy.io import loadmat
+    from pathlib import Path
 
+    filename = Path(filename).as_posix()
     data_struct = loadmat(filename)
     if not var_name:
         var_name = [x for x in data_struct.keys() if not '__' in x][0]
